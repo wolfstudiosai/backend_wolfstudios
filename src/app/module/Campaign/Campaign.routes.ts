@@ -19,4 +19,18 @@ router.post(
     CampaignControllers.createCampaign
 );
 
+router.delete(
+    "/delete",
+    auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
+    validateRequest(CampaignValidations.deleteCampaignValidationSchema),
+    CampaignControllers.deleteCampaigns
+);
+
+router.patch(
+    "/update/:id",
+    auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
+    validateRequest(CampaignValidations.updateCampaignValidationSchema),
+    CampaignControllers.updateCampaign
+);
+
 export const CampaignRoutes = router;

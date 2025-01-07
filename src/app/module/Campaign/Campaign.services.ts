@@ -102,7 +102,46 @@ const getCampaigns = async (query: Record<string, any>) => {
     };
 };
 
+const updateCampaign = async (id: string, payload: Record<string, any>) => {
+    if (payload?.name) {
+        payload.slug = slugGenerator(payload.name)
+    }
+    if (payload?.start_date) {
+        payload.start_date = new Date(payload.start_date)
+    }
+    if (payload?.end_date) {
+        payload.end_date = new Date(payload.end_date)
+    }
+
+    const result = await prisma.campaign.update({
+        where: {
+            id
+        },
+        data: {
+            ...payload
+        }
+    });
+
+    return result
+}
+
+const deleteCampaigns = async ({ ids }: { ids: string[] }) => {
+    const result = await prisma.campaign.deleteMany({
+        where: {
+            id: {
+                in: ids
+            }
+        }
+    });
+    return {
+        deleted_count: result.count,
+        message: `${result.count} campaign deleted successfully`
+    }
+}
+
 export const CampaignServices = {
     createCampaign,
-    getCampaigns
+    getCampaigns,
+    updateCampaign,
+    deleteCampaigns
 }

@@ -28,6 +28,7 @@ const common_1 = require("../../constants/common");
 const prisma_1 = __importDefault(require("../../shared/prisma"));
 const fieldValidityChecker_1 = __importDefault(require("../../utils/fieldValidityChecker"));
 const pagination_1 = __importDefault(require("../../utils/pagination"));
+const slugGenerator_1 = require("../../utils/slugGenerator");
 const Campaign_constants_1 = require("./Campaign.constants");
 const createCampaign = (user, payload) => __awaiter(void 0, void 0, void 0, function* () {
     const { start_date, end_date } = payload, rest = __rest(payload, ["start_date", "end_date"]);
@@ -40,7 +41,7 @@ const createCampaign = (user, payload) => __awaiter(void 0, void 0, void 0, func
         endDate = new Date(end_date);
     }
     const result = yield prisma_1.default.campaign.create({
-        data: Object.assign(Object.assign({}, rest), { start_date: startDate, end_date: endDate, user_id: user.id })
+        data: Object.assign(Object.assign({}, rest), { start_date: startDate, end_date: endDate, user_id: user.id, slug: (0, slugGenerator_1.slugGenerator)(payload.name) })
     });
     return result;
 });
@@ -103,7 +104,40 @@ const getCampaigns = (query) => __awaiter(void 0, void 0, void 0, function* () {
         data: result,
     };
 });
+const updateCampaign = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
+    if (payload === null || payload === void 0 ? void 0 : payload.name) {
+        payload.slug = (0, slugGenerator_1.slugGenerator)(payload.name);
+    }
+    if (payload === null || payload === void 0 ? void 0 : payload.start_date) {
+        payload.start_date = new Date(payload.start_date);
+    }
+    if (payload === null || payload === void 0 ? void 0 : payload.end_date) {
+        payload.end_date = new Date(payload.end_date);
+    }
+    const result = yield prisma_1.default.campaign.update({
+        where: {
+            id
+        },
+        data: Object.assign({}, payload)
+    });
+    return result;
+});
+const deleteCampaigns = (_a) => __awaiter(void 0, [_a], void 0, function* ({ ids }) {
+    const result = yield prisma_1.default.campaign.deleteMany({
+        where: {
+            id: {
+                in: ids
+            }
+        }
+    });
+    return {
+        deleted_count: result.count,
+        message: `${result.count} campaign deleted successfully`
+    };
+});
 exports.CampaignServices = {
     createCampaign,
-    getCampaigns
+    getCampaigns,
+    updateCampaign,
+    deleteCampaigns
 };

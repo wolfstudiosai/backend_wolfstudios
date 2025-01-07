@@ -33,10 +33,11 @@ const filesUpload = (req) => __awaiter(void 0, void 0, void 0, function* () {
             if (!File_constants_1.allowedFileType.includes(file.mimetype)) {
                 continue;
             }
+            const name = `${Date.now()}-${file.originalname}`;
             const metadata = yield (0, sharp_1.default)(file.buffer).metadata();
             const { data } = yield supabase_1.default.storage
                 .from(config_1.default.supabase_bucket_general)
-                .upload(file.originalname, file.buffer, {
+                .upload(name, file.buffer, {
                 contentType: file.mimetype,
             });
             if (data === null || data === void 0 ? void 0 : data.id) {

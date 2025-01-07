@@ -39,7 +39,27 @@ const getCampaigns = (0, catchAsync_1.default)((req, res, next) => __awaiter(voi
         data: result.data,
     });
 }));
+const updateCampaign = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield Campaign_services_1.CampaignServices.updateCampaign(req.params.id, req.body);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: "Campaign updated successfully",
+        data: result,
+    });
+}));
+const deleteCampaigns = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield Campaign_services_1.CampaignServices.deleteCampaigns(req.body);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: "Campaigns deleted successfully",
+        data: result,
+    });
+}));
 exports.CampaignControllers = {
     createCampaign,
-    getCampaigns
+    getCampaigns,
+    updateCampaign,
+    deleteCampaigns
 };

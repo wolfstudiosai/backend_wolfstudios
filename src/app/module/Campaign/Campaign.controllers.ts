@@ -30,7 +30,29 @@ const getCampaigns = catchAsync(async (req, res, next) => {
     });
 });
 
+const updateCampaign = catchAsync(async (req, res, next) => {
+    const result = await CampaignServices.updateCampaign(req.params.id, req.body);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Campaign updated successfully",
+        data: result,
+    });
+});
+
+const deleteCampaigns = catchAsync(async (req, res, next) => {
+    const result = await CampaignServices.deleteCampaigns(req.body);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Campaigns deleted successfully",
+        data: result,
+    });
+});
+
 export const CampaignControllers = {
     createCampaign,
-    getCampaigns
+    getCampaigns,
+    updateCampaign,
+    deleteCampaigns
 }
