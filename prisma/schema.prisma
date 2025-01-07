@@ -94,6 +94,33 @@ model Records {
   @@map("records")
 }
 
+model Campaign {
+  id                   String         @id @default(uuid())
+  name                 String
+  thumbnail            String?
+  stackholder          String?
+  status               CampaignStatus
+  start_date           DateTime?
+  end_date             DateTime?
+  description          String?
+  goal                 String?
+  partner_compensation Int            @default(0)
+  partner_deliverables String?
+  contributed_partners String?
+  prospected_partners  String?
+  content_HQ           String?
+  content_guidelines   String?
+  image_inspiration    String?
+  video_inspiration    String?
+  content_engagement   Int            @default(0)
+  product_expense      Int            @default(0)
+  partner_expense      Int            @default(0)
+  created_at           DateTime       @default(now())
+  updated_at           DateTime       @updatedAt
+
+  @@map("campaigns")
+}
+
 model Image {
   id         String   @id @default(uuid())
   name       String
@@ -127,4 +154,11 @@ enum UserRole {
 enum PostingStatus {
   POSTED
   NOT_POSTED
+}
+
+enum CampaignStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  COMPLETED
 }
