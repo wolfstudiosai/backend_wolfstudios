@@ -17,7 +17,7 @@ const swaggerDefinition = {
             description: "Local Server",
         },
         {
-            url: "https://wolf-studios-backend-theta.vercel.app/api/v1",
+            url: "https://wolf-studios-backend-phi.vercel.app/api/v1",
             description: "Deployed Server",
         },
     ],
