@@ -5,6 +5,108 @@
  *   description: Campaign
  */
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Campaign:
+ *       type: object
+ *       properties:
+ *         name:
+ *           type: string
+ *           description: Name of the campaign
+ *           example: "Sample Campaign"
+ *         description:
+ *           type: string
+ *           description: Description of the campaign
+ *           example: This is a sample campaign
+ *         start_date:
+ *           type: string
+ *           format: date
+ *           description: Start date of the campaign
+ *           example: 2023-08-01
+ *         end_date:
+ *           type: string
+ *           format: date
+ *           description: End date of the campaign
+ *           example: 2023-08-31
+ *         status:
+ *           type: string
+ *           enum: [PENDING, APPROVED, REJECTED, COMPLETED]
+ *           description: Status of the campaign
+ *           example: PENDING
+ *         thumbnail:
+ *           type: string
+ *           description: Thumbnail of the campaign
+ *           example: /general/thumbnail.jpg
+ *         stackholder:
+ *           type: string
+ *           description: Stackholder of the campaign
+ *           example: John Doe
+ *         goal:
+ *           type: string
+ *           description: Goal of the campaign
+ *           example: goal
+ *         partner_compensation:
+ *           type: number
+ *           description: Partner compensation of the campaign
+ *           example: 100
+ *         partner_deliverables:
+ *           type: string
+ *           description: Partner deliverables of the campaign
+ *           example: deliverables
+ *         contributed_partners:
+ *           type: string
+ *           description: Contributed partners of the campaign
+ *           example: partners
+ *         prospected_partners:
+ *           type: string
+ *           description: Prospected partners of the campaign
+ *           example: partners
+ *         content_HQ:
+ *           type: string
+ *           description: Content of the campaign
+ *           example: content
+ *         content_guidelines:
+ *           type: string
+ *           description: Content guidelines of the campaign
+ *           example: guidelines
+ *         image_inspiration:
+ *           type: string
+ *           description: Image inspiration of the campaign
+ *           example: inspiration
+ *         video_inspiration:
+ *           type: string
+ *           description: Video inspiration of the campaign
+ *           example: inspiration
+ *         content_engagement:
+ *           type: number
+ *           description: Content engagement of the campaign
+ *           example: 100
+ *         product_expense:
+ *           type: number
+ *           description: Product expense of the campaign
+ *           example: 100
+ *         partner_expense:
+ *           type: number
+ *           description: Partner expense of the campaign
+ *           example: 100
+ *         social_platforms:
+ *           type: array
+ *           items:
+ *             type: object
+ *             properties:
+ *               platform:
+ *                 type: string
+ *                 description: Platform name
+ *                 example: Instagram
+ *               url:
+ *                 type: string
+ *                 description: URL of the platform
+ *                 example: https://instagram.com/sample
+ */
+
+
 // Add Campaign
 
 /**
@@ -20,98 +122,8 @@
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *                 description: Name of the campaign
- *                 example: "Sample Campaign"
- *               description:
- *                 type: string
- *                 description: Description of the campaign
- *                 example: This is a sample campaign
- *               start_date:
- *                 type: string
- *                 description: Start date of the campaign
- *                 example: 2023-08-01
- *               end_date:
- *                 type: string
- *                 description: End date of the campaign
- *                 example: 2023-08-31
- *               status:
- *                 type: string
- *                 enum: [PENDING, APPROVED, REJECTED, COMPLETED]
- *                 description: Status of the campaign
- *                 example: PENDING
- *               thumbnail:
- *                 type: string
- *                 description: Thumbnail of the campaign
- *                 example: /general/thumbnail.jpg
- *               stackholder:
- *                 type: string
- *                 description: Stackholder of the campaign
- *                 example: John Doe
- *               goal:
- *                 type: string
- *                 description: Goal of the campaign
- *                 example: goal
- *               partner_compensation:
- *                 type: number
- *                 description: Partner compensation of the campaign
- *                 example: 100
- *               partner_deliverables:
- *                 type: string
- *                 description: Partner deliverables of the campaign
- *                 example: deliverables
- *               contributed_partners:
- *                 type: string
- *                 description: Contributed partners of the campaign
- *                 example: partners
- *               prospected_partners:
- *                 type: string
- *                 description: Prospected partners of the campaign
- *                 example: partners
- *               content_HQ:
- *                 type: string
- *                 description: Content of the campaign
- *                 example: content
- *               content_guidelines:
- *                 type: string
- *                 description: Content guidelines of the campaign
- *                 example: guidelines
- *               image_inspiration:
- *                 type: string
- *                 description: Image inspiration of the campaign
- *                 example: inspiration
- *               video_inspiration:
- *                 type: string
- *                 description: Video inspiration of the campaign
- *                 example: inspiration
- *               content_engagement:
- *                 type: number
- *                 description: Content engagement of the campaign
- *                 example: 100
- *               product_expense:
- *                 type: number
- *                 description: Product expense of the campaign
- *                 example: 100
- *               partner_expense:
- *                 type: number
- *                 description: Partner expense of the campaign
- *                 example: 100
- *               social_platforms:
- *                 type: array
- *                 items:
- *                   type: object
- *                   properties:
- *                     platform:
- *                       type: string
- *                       description: Platform name
- *                       example: Instagram
- *                     url:
- *                       type: string
- *                       description: URL of the platform
- *                       example: https://instagram.com/sample
+ *             allOf:
+ *               - $ref: '#/components/schemas/Campaign'
  *     responses:
  *       201:
  *         description: User created successfully
