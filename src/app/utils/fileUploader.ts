@@ -13,7 +13,7 @@ const storage = multer.memoryStorage();
 
 const multipleUpload = multer({ storage }).fields([
   {
-    name: "images",
+    name: "files",
     maxCount: 10,
   },
 ]);

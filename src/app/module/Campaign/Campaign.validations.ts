@@ -1,0 +1,38 @@
+import { CampaignStatus } from "@prisma/client";
+import { z } from "zod";
+
+const createCampaignValidationSchema = z.object({
+    body: z.object({
+        name: z.string().min(1, "Name is required"),
+        stackholder: z.string().optional(),
+        status: z.enum(Object.values(CampaignStatus) as [string, ...string[]]).default(CampaignStatus.PENDING),
+        thumbnail: z.string().optional(),
+        start_date: z.string().optional(),
+        end_date: z.string().optional(),
+        description: z.string().optional(),
+        goal: z.string().optional(),
+        partner_compensation: z
+            .number()
+            .min(0, "Partner compensation must be a positive number").default(0),
+        partner_deliverables: z.string().optional(),
+        contributed_partners: z.string().optional(),
+        prospected_partners: z.string().optional(),
+        content_HQ: z.string().optional(),
+        content_guidelines: z.string().optional(),
+        image_inspiration: z.string().optional(),
+        video_inspiration: z.string().optional(),
+        content_engagement: z
+            .number()
+            .min(0, "Content engagement must be a positive number").default(0),
+        product_expense: z.number().min(0, "Product expense must be a positive number").default(0),
+        partner_expense: z.number().min(0, "Partner expense must be a positive number").default(0),
+        social_platforms: z.array(z.object({
+            platform: z.string(),
+            url: z.string()
+        }))
+    }).strict()
+})
+
+export const CampaignValidations = {
+    createCampaignValidationSchema
+}

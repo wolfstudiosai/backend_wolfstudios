@@ -1,7 +1,9 @@
 import { Router } from "express";
 import { AuthRoutes } from "../module/Auth/Auth.routes";
-import { UserRoutes } from "../module/User/User.routes";
+import { CampaignRoutes } from "../module/Campaign/Campaign.routes";
+import { FileRoutes } from "../module/File/File.routes";
 import { RecordsRoutes } from "../module/Records/Records.routes";
+import { UserRoutes } from "../module/User/User.routes";
 
 const router = Router();
 
@@ -17,6 +19,14 @@ const routes = [
   {
     path: "/record",
     route: RecordsRoutes,
+  },
+  {
+    path: "/campaign",
+    route: CampaignRoutes,
+  },
+  {
+    path: "/file",
+    route: FileRoutes,
   },
 ];
 

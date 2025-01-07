@@ -27,6 +27,8 @@ model User {
   password_changed_at DateTime   @default(now())
   created_at          DateTime   @default(now())
   updated_at          DateTime   @updatedAt
+  Campaign            Campaign[]
+  File                File[]
 
   @@map("users")
 }
@@ -97,12 +99,12 @@ model Records {
 model Campaign {
   id                   String         @id @default(uuid())
   name                 String
-  thumbnail            String?
-  stackholder          String?
-  status               CampaignStatus
+  description          String?
   start_date           DateTime?
   end_date             DateTime?
-  description          String?
+  status               CampaignStatus
+  thumbnail            String?
+  stackholder          String?
   goal                 String?
   partner_compensation Int            @default(0)
   partner_deliverables String?
@@ -115,19 +117,33 @@ model Campaign {
   content_engagement   Int            @default(0)
   product_expense      Int            @default(0)
   partner_expense      Int            @default(0)
+  social_platforms     Json?
+  user_id              String
   created_at           DateTime       @default(now())
   updated_at           DateTime       @updatedAt
+
+  created_by User @relation(fields: [user_id], references: [id])
 
   @@map("campaigns")
 }
 
-model Image {
+model File {
   id         String   @id @default(uuid())
   name       String
+  alt_text   String
+  type       String
+  size       Int
+  width      Int
+  height     Int
   path       String
-  cloud_id   String
+  bucket_id  String
+  user_id    String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+
+  uploaded_by User @relation(fields: [user_id], references: [id])
+
+  @@map("files")
 }
 
 model OTP {
