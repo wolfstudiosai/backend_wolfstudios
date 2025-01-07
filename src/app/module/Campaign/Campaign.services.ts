@@ -4,6 +4,7 @@ import { TAuthUser } from "../../interfaces/common";
 import prisma from "../../shared/prisma";
 import fieldValidityChecker from "../../utils/fieldValidityChecker";
 import pagination from "../../utils/pagination";
+import { slugGenerator } from "../../utils/slugGenerator";
 import { campaignSearchableFields, campaignSortableFields } from "./Campaign.constants";
 import { TCreateCampaignPayload } from "./Campaign.interfaces";
 
@@ -24,7 +25,8 @@ const createCampaign = async (user: TAuthUser, payload: TCreateCampaignPayload) 
             ...rest,
             start_date: startDate,
             end_date: endDate,
-            user_id: user.id
+            user_id: user.id,
+            slug: slugGenerator(payload.name),
         }
     })
     return result

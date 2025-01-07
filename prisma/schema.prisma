@@ -99,6 +99,7 @@ model Records {
 model Campaign {
   id                   String         @id @default(uuid())
   name                 String
+  slug                 String
   description          String?
   start_date           DateTime?
   end_date             DateTime?

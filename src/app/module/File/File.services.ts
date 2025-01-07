@@ -26,10 +26,11 @@ const filesUpload = async (req: Request & { user?: TAuthUser }) => {
             if (!allowedFileType.includes(file.mimetype)) {
                 continue;
             }
+            const name = `${Date.now()}-${file.originalname}`;
             const metadata = await sharp(file.buffer).metadata();
             const { data } = await supabase.storage
                 .from(config.supabase_bucket_general)
-                .upload(file.originalname, file.buffer, {
+                .upload(name, file.buffer, {
                     contentType: file.mimetype,
                 });
 
