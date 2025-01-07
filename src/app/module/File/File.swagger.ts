@@ -46,14 +46,18 @@
  *                   description: Success message
  *                   example: Files uploaded successfully
  *                 data:
- *                   type: object
- *                   properties:
- *                     uploaded_count:
- *                       type: number
- *                       example: 2
- *                     message:
- *                       type: string
- *                       example: 2 file has been uploaded
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       name:
+ *                         type: string
+ *                         description: Name of the file
+ *                         example: sample.pdf
+ *                       path:
+ *                         type: string
+ *                         description: Path of the file
+ *                         example: /general/sample.pdf
  *       401:
  *         description: Unauthorized. Only registered user upload files
  *       400:

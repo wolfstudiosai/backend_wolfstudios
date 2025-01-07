@@ -16,6 +16,8 @@ exports.CampaignControllers = void 0;
 const http_status_1 = __importDefault(require("http-status"));
 const catchAsync_1 = __importDefault(require("../../shared/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../shared/sendResponse"));
+const pick_1 = require("../../utils/pick");
+const Campaign_constants_1 = require("./Campaign.constants");
 const Campaign_services_1 = require("./Campaign.services");
 const createCampaign = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield Campaign_services_1.CampaignServices.createCampaign(req.user, req.body);
@@ -26,6 +28,18 @@ const createCampaign = (0, catchAsync_1.default)((req, res, next) => __awaiter(v
         data: result,
     });
 }));
+const getCampaigns = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const filteredQuery = (0, pick_1.pick)(req.query, Campaign_constants_1.campaignFilterableFields);
+    const result = yield Campaign_services_1.CampaignServices.getCampaigns(filteredQuery);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: "Campaigns retrieved successfully",
+        meta: result.meta,
+        data: result.data,
+    });
+}));
 exports.CampaignControllers = {
-    createCampaign
+    createCampaign,
+    getCampaigns
 };

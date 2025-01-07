@@ -7,6 +7,11 @@ import { CampaignValidations } from "./Campaign.validations";
 
 const router = Router();
 
+router.get(
+    "/",
+    CampaignControllers.getCampaigns
+);
+
 router.post(
     "/add-campaign",
     auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),

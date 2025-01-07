@@ -54,14 +54,26 @@ const filesUpload = (req) => __awaiter(void 0, void 0, void 0, function* () {
             }
         }
     }
-    const result = yield prisma_1.default.file.createMany({
-        data: prepared_files,
-        skipDuplicates: true,
-    });
-    return {
-        uploaded_count: result.count,
-        message: `${result.count} file has been uploaded`,
-    };
+    const uploaded_files = prepared_files.map((i) => i.path);
+    const result = yield prisma_1.default.$transaction((tx) => __awaiter(void 0, void 0, void 0, function* () {
+        yield prisma_1.default.file.createMany({
+            data: prepared_files,
+            skipDuplicates: true,
+        });
+        const files = yield prisma_1.default.file.findMany({
+            where: {
+                path: {
+                    in: uploaded_files
+                }
+            },
+            select: {
+                name: true,
+                path: true
+            }
+        });
+        return files;
+    }));
+    return result;
 });
 exports.FileServices = {
     filesUpload

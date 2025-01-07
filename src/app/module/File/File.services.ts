@@ -50,17 +50,32 @@ const filesUpload = async (req: Request & { user?: TAuthUser }) => {
         }
     }
 
+    const uploaded_files = prepared_files.map((i) => i.path);
 
-    const result = await prisma.file.createMany({
-        data: prepared_files,
-        skipDuplicates: true,
+
+    const result = await prisma.$transaction(async (tx) => {
+        await prisma.file.createMany({
+            data: prepared_files,
+            skipDuplicates: true,
+        })
+
+        const files = await prisma.file.findMany({
+            where: {
+                path: {
+                    in: uploaded_files
+                }
+            },
+            select: {
+                name: true,
+                path: true
+            }
+        })
+
+        return files;
     });
 
 
-    return {
-        uploaded_count: result.count,
-        message: `${result.count} file has been uploaded`,
-    };
+    return result;
 
 }
 

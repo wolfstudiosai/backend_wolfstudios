@@ -24,7 +24,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CampaignServices = void 0;
+const common_1 = require("../../constants/common");
 const prisma_1 = __importDefault(require("../../shared/prisma"));
+const fieldValidityChecker_1 = __importDefault(require("../../utils/fieldValidityChecker"));
+const pagination_1 = __importDefault(require("../../utils/pagination"));
+const Campaign_constants_1 = require("./Campaign.constants");
 const createCampaign = (user, payload) => __awaiter(void 0, void 0, void 0, function* () {
     const { start_date, end_date } = payload, rest = __rest(payload, ["start_date", "end_date"]);
     let startDate = null;
@@ -40,6 +44,66 @@ const createCampaign = (user, payload) => __awaiter(void 0, void 0, void 0, func
     });
     return result;
 });
+const getCampaigns = (query) => __awaiter(void 0, void 0, void 0, function* () {
+    const { searchTerm, page, limit, sortBy, sortOrder, id } = query, remainingQuery = __rest(query, ["searchTerm", "page", "limit", "sortBy", "sortOrder", "id"]);
+    if (sortBy) {
+        (0, fieldValidityChecker_1.default)(Campaign_constants_1.campaignSortableFields, sortBy);
+    }
+    if (sortOrder) {
+        (0, fieldValidityChecker_1.default)(common_1.sortOrderType, sortOrder);
+    }
+    const { pageNumber, limitNumber, skip, sortWith, sortSequence } = (0, pagination_1.default)({
+        page,
+        limit,
+        sortBy,
+        sortOrder,
+    });
+    const andConditions = [];
+    if (id)
+        andConditions.push({
+            id: id,
+        });
+    if (searchTerm) {
+        andConditions.push({
+            OR: Campaign_constants_1.campaignSearchableFields.map((field) => {
+                return {
+                    [field]: {
+                        contains: searchTerm,
+                        mode: "insensitive",
+                    },
+                };
+            }),
+        });
+    }
+    if (Object.keys(remainingQuery).length) {
+        Object.keys(remainingQuery).forEach((key) => {
+            andConditions.push({
+                [key]: remainingQuery[key],
+            });
+        });
+    }
+    const whereConditons = {
+        AND: andConditions,
+    };
+    const result = yield prisma_1.default.campaign.findMany({
+        where: whereConditons,
+        skip,
+        take: limitNumber,
+        orderBy: {
+            [sortWith]: sortSequence,
+        },
+    });
+    const total = yield prisma_1.default.campaign.count({ where: whereConditons });
+    return {
+        meta: {
+            page: pageNumber,
+            limit: limitNumber,
+            total,
+        },
+        data: result,
+    };
+});
 exports.CampaignServices = {
-    createCampaign
+    createCampaign,
+    getCampaigns
 };
