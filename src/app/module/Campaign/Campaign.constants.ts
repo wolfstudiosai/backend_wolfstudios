@@ -34,5 +34,6 @@ export const campaignFilterableFields = [
     "sortBy",
     "sortOrder",
     "id",
-    "searchTerm"
+    "searchTerm",
+    "slug"
 ]

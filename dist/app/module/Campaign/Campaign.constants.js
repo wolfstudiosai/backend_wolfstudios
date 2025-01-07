@@ -35,5 +35,6 @@ exports.campaignFilterableFields = [
     "sortBy",
     "sortOrder",
     "id",
-    "searchTerm"
+    "searchTerm",
+    "slug"
 ];
