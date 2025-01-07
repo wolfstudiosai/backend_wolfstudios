@@ -13,12 +13,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserControllers = void 0;
+const http_status_1 = __importDefault(require("http-status"));
 const catchAsync_1 = __importDefault(require("../../shared/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../shared/sendResponse"));
 const pick_1 = require("../../utils/pick");
 const User_constants_1 = require("./User.constants");
 const User_services_1 = require("./User.services");
-const http_status_1 = __importDefault(require("http-status"));
 const getUsers = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const filteredQuery = (0, pick_1.pick)(req.query, User_constants_1.userFilterableFields);
     const result = yield User_services_1.UserServices.getUsers(filteredQuery);

@@ -24,7 +24,7 @@ cloudinary_1.v2.config({
 const storage = multer_1.default.memoryStorage();
 const multipleUpload = (0, multer_1.default)({ storage }).fields([
     {
-        name: "images",
+        name: "files",
         maxCount: 10,
     },
 ]);
