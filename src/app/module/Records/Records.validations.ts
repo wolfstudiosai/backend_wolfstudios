@@ -15,11 +15,11 @@ const createRecordValidationSchema = z.object({
     posting_quality: z.string().optional(),
     google_drive_files: z.string().optional(),
     playbook_link: z.string().optional(),
-    uppromote_conversion: z.number().int().min(0).default(0), // Integer, default 0
+    uppromote_conversion: z.number().int().min(0).default(0),
     asset_status: z.string().optional(),
     month_uploaded: z.string().nullable().optional(),
     REVO_pinterest: z.string().default("not-posted"),
-    PIN_accounts_used: z.string().default("not-posted"),
+    pin_accounts_used: z.string().default("not-posted"),
     pinterest_PIN_click: z.number().int().min(0).default(0),
     pinterest_view: z.number().int().min(0).default(0),
     REVO_instagram: z.string().optional(),
@@ -35,7 +35,8 @@ const createRecordValidationSchema = z.object({
     tiktok_accounts_used: z.string().default("not-posted"),
     partner_tiktok_link: z.string().default("not-posted"),
     partner_TT_like: z.number().int().min(0).default(0),
-    partner_TT_comment: z.number().int().min(0).default(0),
+    partner_TT_comments: z.number().int().min(0).default(0),
+    partner_TT_comment: z.string().optional(),
     partner_TT_share: z.number().int().min(0).default(0),
     partner_TT_view: z.number().int().min(0).default(0),
     partner_TT_save: z.number().int().min(0).default(0),
@@ -59,12 +60,15 @@ const createRecordValidationSchema = z.object({
     posting_status: z
       .enum(Object.values(PostingStatus) as [string, ...string[]])
       .default(PostingStatus.NOT_POSTED),
-    partner_HQ: z.string().optional(),
+    partner_hq: z.string().optional(),
     portfolio: z.string().optional(),
     contributed_engagement: z.number().int().min(0).default(0),
-    by_tags: z.array(z.string()).default([]),
+    by_tags: z.string().optional(),
     by_city: z.string().optional(),
-    all_internet_search: z.string().optional(),
+    AI_internet_search: z.string().optional(),
+    facilities_contributed_content: z.string().optional(),
+    image: z.string().optional(),
+    video: z.string().optional()
   }),
 });
 
@@ -85,7 +89,7 @@ const updateRecordValidationSchema = z.object({
     asset_status: z.string().optional(),
     month_uploaded: z.string().nullable().optional(),
     REVO_pinterest: z.string().optional(),
-    PIN_accounts_used: z.string().optional(),
+    pin_accounts_used: z.string().optional(),
     pinterest_PIN_click: z.number().int().min(0).optional(),
     pinterest_view: z.number().int().min(0).optional(),
     REVO_instagram: z.string().optional(),
@@ -101,7 +105,8 @@ const updateRecordValidationSchema = z.object({
     tiktok_accounts_used: z.string().optional(),
     partner_tiktok_link: z.string().optional(),
     partner_TT_like: z.number().int().min(0).optional(),
-    partner_TT_comment: z.number().int().min(0).optional(),
+    partner_TT_comments: z.number().int().min(0).optional(),
+    partner_TT_comment: z.string().optional(),
     partner_TT_share: z.number().int().min(0).optional(),
     partner_TT_view: z.number().int().min(0).optional(),
     partner_TT_save: z.number().int().min(0).optional(),
@@ -125,12 +130,15 @@ const updateRecordValidationSchema = z.object({
     posting_status: z
       .enum(Object.values(PostingStatus) as [string, ...string[]])
       .optional(),
-    partner_HQ: z.string().optional(),
+    partner_hq: z.string().optional(),
     portfolio: z.string().optional(),
     contributed_engagement: z.number().int().min(0).optional(),
-    by_tags: z.array(z.string()).optional(),
+    by_tags: z.string().optional(),
     by_city: z.string().optional(),
-    all_internet_search: z.string().optional(),
+    AI_internet_search: z.string().optional(),
+    facilities_contributed_content: z.string().optional(),
+    image: z.string().optional(),
+    video: z.string().optional()
   }),
 });
 

@@ -16,15 +16,8 @@ router.get(
 router.post(
   "/add-record",
   auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
-  // validateRequest(RecordsValidations.createRecordValidationSchema),
+  validateRequest(RecordsValidations.createRecordValidationSchema),
   RecordsControllers.createRecord
-);
-
-router.post(
-  "/add-records",
-  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
-  // validateRequest(RecordsValidations.createRecordValidationSchema),
-  RecordsControllers.createRecords
 );
 
 router.patch(

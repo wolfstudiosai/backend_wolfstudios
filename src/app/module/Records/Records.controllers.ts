@@ -13,16 +13,6 @@ const createRecord = catchAsync(async (req, res, next) => {
   });
 });
 
-const createRecords = catchAsync(async (req, res, next) => {
-  const result = await RecordsServices.createRecords(req.body);
-  sendResponse(res, {
-    statusCode: httpStatus.CREATED,
-    success: true,
-    message: "Data management records created successfully",
-    data: result,
-  });
-});
-
 const getRecords = catchAsync(async (req, res, next) => {
   const result = await RecordsServices.getRecords(req.query);
   sendResponse(res, {
@@ -47,6 +37,5 @@ const updateRecord = catchAsync(async (req, res, next) => {
 export const RecordsControllers = {
   createRecord,
   getRecords,
-  updateRecord,
-  createRecords
+  updateRecord
 };

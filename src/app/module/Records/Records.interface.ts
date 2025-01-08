@@ -52,7 +52,7 @@ export type TCreateRecordPayload = {
   partner_hq?: string;
   portfolio?: string;
   contributed_engagement?: number;
-  by_tags?: string[];
+  by_tags?: string;
   by_city?: string;
   AI_internet_search?: string;
   facilities_contributed_content?: string;

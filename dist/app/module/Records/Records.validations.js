@@ -17,11 +17,11 @@ const createRecordValidationSchema = zod_1.z.object({
         posting_quality: zod_1.z.string().optional(),
         google_drive_files: zod_1.z.string().optional(),
         playbook_link: zod_1.z.string().optional(),
-        uppromote_conversion: zod_1.z.number().int().min(0).default(0), // Integer, default 0
+        uppromote_conversion: zod_1.z.number().int().min(0).default(0),
         asset_status: zod_1.z.string().optional(),
         month_uploaded: zod_1.z.string().nullable().optional(),
         REVO_pinterest: zod_1.z.string().default("not-posted"),
-        PIN_accounts_used: zod_1.z.string().default("not-posted"),
+        pin_accounts_used: zod_1.z.string().default("not-posted"),
         pinterest_PIN_click: zod_1.z.number().int().min(0).default(0),
         pinterest_view: zod_1.z.number().int().min(0).default(0),
         REVO_instagram: zod_1.z.string().optional(),
@@ -37,7 +37,8 @@ const createRecordValidationSchema = zod_1.z.object({
         tiktok_accounts_used: zod_1.z.string().default("not-posted"),
         partner_tiktok_link: zod_1.z.string().default("not-posted"),
         partner_TT_like: zod_1.z.number().int().min(0).default(0),
-        partner_TT_comment: zod_1.z.number().int().min(0).default(0),
+        partner_TT_comments: zod_1.z.number().int().min(0).default(0),
+        partner_TT_comment: zod_1.z.string().optional(),
         partner_TT_share: zod_1.z.number().int().min(0).default(0),
         partner_TT_view: zod_1.z.number().int().min(0).default(0),
         partner_TT_save: zod_1.z.number().int().min(0).default(0),
@@ -61,12 +62,15 @@ const createRecordValidationSchema = zod_1.z.object({
         posting_status: zod_1.z
             .enum(Object.values(client_1.PostingStatus))
             .default(client_1.PostingStatus.NOT_POSTED),
-        partner_HQ: zod_1.z.string().optional(),
+        partner_hq: zod_1.z.string().optional(),
         portfolio: zod_1.z.string().optional(),
         contributed_engagement: zod_1.z.number().int().min(0).default(0),
-        by_tags: zod_1.z.array(zod_1.z.string()).default([]),
+        by_tags: zod_1.z.string().optional(),
         by_city: zod_1.z.string().optional(),
-        all_internet_search: zod_1.z.string().optional(),
+        AI_internet_search: zod_1.z.string().optional(),
+        facilities_contributed_content: zod_1.z.string().optional(),
+        image: zod_1.z.string().optional(),
+        video: zod_1.z.string().optional()
     }),
 });
 const updateRecordValidationSchema = zod_1.z.object({
@@ -86,7 +90,7 @@ const updateRecordValidationSchema = zod_1.z.object({
         asset_status: zod_1.z.string().optional(),
         month_uploaded: zod_1.z.string().nullable().optional(),
         REVO_pinterest: zod_1.z.string().optional(),
-        PIN_accounts_used: zod_1.z.string().optional(),
+        pin_accounts_used: zod_1.z.string().optional(),
         pinterest_PIN_click: zod_1.z.number().int().min(0).optional(),
         pinterest_view: zod_1.z.number().int().min(0).optional(),
         REVO_instagram: zod_1.z.string().optional(),
@@ -102,7 +106,8 @@ const updateRecordValidationSchema = zod_1.z.object({
         tiktok_accounts_used: zod_1.z.string().optional(),
         partner_tiktok_link: zod_1.z.string().optional(),
         partner_TT_like: zod_1.z.number().int().min(0).optional(),
-        partner_TT_comment: zod_1.z.number().int().min(0).optional(),
+        partner_TT_comments: zod_1.z.number().int().min(0).optional(),
+        partner_TT_comment: zod_1.z.string().optional(),
         partner_TT_share: zod_1.z.number().int().min(0).optional(),
         partner_TT_view: zod_1.z.number().int().min(0).optional(),
         partner_TT_save: zod_1.z.number().int().min(0).optional(),
@@ -126,12 +131,15 @@ const updateRecordValidationSchema = zod_1.z.object({
         posting_status: zod_1.z
             .enum(Object.values(client_1.PostingStatus))
             .optional(),
-        partner_HQ: zod_1.z.string().optional(),
+        partner_hq: zod_1.z.string().optional(),
         portfolio: zod_1.z.string().optional(),
         contributed_engagement: zod_1.z.number().int().min(0).optional(),
-        by_tags: zod_1.z.array(zod_1.z.string()).optional(),
+        by_tags: zod_1.z.string().optional(),
         by_city: zod_1.z.string().optional(),
-        all_internet_search: zod_1.z.string().optional(),
+        AI_internet_search: zod_1.z.string().optional(),
+        facilities_contributed_content: zod_1.z.string().optional(),
+        image: zod_1.z.string().optional(),
+        video: zod_1.z.string().optional()
     }),
 });
 exports.RecordsValidations = {

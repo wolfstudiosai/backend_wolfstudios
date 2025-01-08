@@ -26,15 +26,6 @@ const createRecord = (0, catchAsync_1.default)((req, res, next) => __awaiter(voi
         data: result,
     });
 }));
-const createRecords = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield Records_services_1.RecordsServices.createRecords(req.body);
-    (0, sendResponse_1.default)(res, {
-        statusCode: http_status_1.default.CREATED,
-        success: true,
-        message: "Data management records created successfully",
-        data: result,
-    });
-}));
 const getRecords = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield Records_services_1.RecordsServices.getRecords(req.query);
     (0, sendResponse_1.default)(res, {
@@ -57,6 +48,5 @@ const updateRecord = (0, catchAsync_1.default)((req, res, next) => __awaiter(voi
 exports.RecordsControllers = {
     createRecord,
     getRecords,
-    updateRecord,
-    createRecords
+    updateRecord
 };
