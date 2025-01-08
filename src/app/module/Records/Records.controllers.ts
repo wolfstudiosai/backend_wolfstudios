@@ -14,7 +14,7 @@ const createRecord = catchAsync(async (req, res, next) => {
 });
 
 const createRecords = catchAsync(async (req, res, next) => {
-  const result = await RecordsServices.createRecord(req.body);
+  const result = await RecordsServices.createRecords(req.body);
   sendResponse(res, {
     statusCode: httpStatus.CREATED,
     success: true,

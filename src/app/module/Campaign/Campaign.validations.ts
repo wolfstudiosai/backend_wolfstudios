@@ -36,7 +36,7 @@ const createCampaignValidationSchema = z.object({
 const updateCampaignValidationSchema = z.object({
     body: z.object({
         name: z.string().min(1, "Name is required").optional(),
-        stackholder: z.string().optional(),
+        stakeholder: z.string().optional(),
         status: z.enum(Object.values(CampaignStatus) as [string, ...string[]]).optional(),
         thumbnail: z.string().optional(),
         start_date: z.string().optional(),
