@@ -38,6 +38,12 @@ const createRecord = (payload) => __awaiter(void 0, void 0, void 0, function* ()
     });
     return result;
 });
+const createRecords = (payload) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield prisma_1.default.records.createMany({
+        data: payload
+    });
+    return result;
+});
 const getRecords = (query) => __awaiter(void 0, void 0, void 0, function* () {
     const { searchTerm, page, limit, sortBy, sortOrder, id } = query, remainingQuery = __rest(query, ["searchTerm", "page", "limit", "sortBy", "sortOrder", "id"]);
     if (sortBy) {
@@ -110,4 +116,5 @@ exports.RecordsServices = {
     createRecord,
     getRecords,
     updateRecord,
+    createRecords
 };

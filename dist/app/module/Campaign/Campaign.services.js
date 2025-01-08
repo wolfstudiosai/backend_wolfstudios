@@ -24,7 +24,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CampaignServices = void 0;
+const http_status_1 = __importDefault(require("http-status"));
 const common_1 = require("../../constants/common");
+const ApiError_1 = __importDefault(require("../../error/ApiError"));
 const prisma_1 = __importDefault(require("../../shared/prisma"));
 const fieldValidityChecker_1 = __importDefault(require("../../utils/fieldValidityChecker"));
 const pagination_1 = __importDefault(require("../../utils/pagination"));
@@ -123,6 +125,16 @@ const updateCampaign = (id, payload) => __awaiter(void 0, void 0, void 0, functi
     return result;
 });
 const deleteCampaigns = (_a) => __awaiter(void 0, [_a], void 0, function* ({ ids }) {
+    const campaigns = yield prisma_1.default.campaign.findMany({
+        where: {
+            id: {
+                in: ids
+            }
+        }
+    });
+    if (!(campaigns === null || campaigns === void 0 ? void 0 : campaigns.length)) {
+        throw new ApiError_1.default(http_status_1.default.NOT_FOUND, "Campaign not found");
+    }
     const result = yield prisma_1.default.campaign.deleteMany({
         where: {
             id: {

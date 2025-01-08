@@ -6,7 +6,7 @@ const zod_1 = require("zod");
 const createCampaignValidationSchema = zod_1.z.object({
     body: zod_1.z.object({
         name: zod_1.z.string().min(1, "Name is required"),
-        stackholder: zod_1.z.string().optional(),
+        stakeholder: zod_1.z.string().optional(),
         status: zod_1.z.enum(Object.values(client_1.CampaignStatus)).default(client_1.CampaignStatus.PENDING),
         thumbnail: zod_1.z.string().optional(),
         start_date: zod_1.z.string().optional(),
@@ -37,7 +37,7 @@ const createCampaignValidationSchema = zod_1.z.object({
 const updateCampaignValidationSchema = zod_1.z.object({
     body: zod_1.z.object({
         name: zod_1.z.string().min(1, "Name is required").optional(),
-        stackholder: zod_1.z.string().optional(),
+        stakeholder: zod_1.z.string().optional(),
         status: zod_1.z.enum(Object.values(client_1.CampaignStatus)).optional(),
         thumbnail: zod_1.z.string().optional(),
         start_date: zod_1.z.string().optional(),

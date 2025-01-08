@@ -7,9 +7,8 @@ import {
   dataManagementSearchableFields,
   dataManagementSortableFields,
 } from "./Records.constants";
-import { TCreateRecordPayload } from "./Records.interface";
 
-const createRecord = async (payload: TCreateRecordPayload) => {
+const createRecord = async (payload: any) => {
   let month_uploaded = null;
   if (payload.month_uploaded)
     month_uploaded = new Date(payload.month_uploaded as string);
@@ -22,7 +21,7 @@ const createRecord = async (payload: TCreateRecordPayload) => {
   return result;
 };
 
-const createRecords = async (payload: TCreateRecordPayload[]) => {
+const createRecords = async (payload: any) => {
   const result = await prisma.records.createMany({
     data: payload
   })

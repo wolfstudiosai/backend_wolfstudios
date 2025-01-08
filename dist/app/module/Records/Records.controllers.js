@@ -13,9 +13,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RecordsControllers = void 0;
+const http_status_1 = __importDefault(require("http-status"));
 const catchAsync_1 = __importDefault(require("../../shared/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../shared/sendResponse"));
-const http_status_1 = __importDefault(require("http-status"));
 const Records_services_1 = require("./Records.services");
 const createRecord = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield Records_services_1.RecordsServices.createRecord(req.body);
@@ -23,6 +23,15 @@ const createRecord = (0, catchAsync_1.default)((req, res, next) => __awaiter(voi
         statusCode: http_status_1.default.CREATED,
         success: true,
         message: "Data management record created successfully",
+        data: result,
+    });
+}));
+const createRecords = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield Records_services_1.RecordsServices.createRecords(req.body);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.CREATED,
+        success: true,
+        message: "Data management records created successfully",
         data: result,
     });
 }));
@@ -49,4 +58,5 @@ exports.RecordsControllers = {
     createRecord,
     getRecords,
     updateRecord,
+    createRecords
 };
