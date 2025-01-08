@@ -1,7 +1,7 @@
-import { Router } from "express";
-import validateRequest from "../../middlewares/validateRequest";
-import auth from "../../middlewares/auth";
 import { UserRole } from "@prisma/client";
+import { Router } from "express";
+import auth from "../../middlewares/auth";
+import validateRequest from "../../middlewares/validateRequest";
 import { RecordsControllers } from "./Records.controllers";
 import { RecordsValidations } from "./Records.validations";
 
@@ -16,8 +16,15 @@ router.get(
 router.post(
   "/add-record",
   auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
-  validateRequest(RecordsValidations.createRecordValidationSchema),
+  // validateRequest(RecordsValidations.createRecordValidationSchema),
   RecordsControllers.createRecord
+);
+
+router.post(
+  "/add-records",
+  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
+  // validateRequest(RecordsValidations.createRecordValidationSchema),
+  RecordsControllers.createRecords
 );
 
 router.patch(

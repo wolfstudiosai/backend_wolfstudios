@@ -22,6 +22,13 @@ const createRecord = async (payload: TCreateRecordPayload) => {
   return result;
 };
 
+const createRecords = async (payload: TCreateRecordPayload[]) => {
+  const result = await prisma.records.createMany({
+    data: payload
+  })
+  return result;
+};
+
 const getRecords = async (query: Record<string, any>) => {
   const { searchTerm, page, limit, sortBy, sortOrder, id, ...remainingQuery } =
     query;
@@ -106,4 +113,5 @@ export const RecordsServices = {
   createRecord,
   getRecords,
   updateRecord,
+  createRecords
 };

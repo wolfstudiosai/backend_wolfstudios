@@ -1,5 +1,7 @@
 import { Prisma } from "@prisma/client";
+import httpStatus from "http-status";
 import { sortOrderType } from "../../constants/common";
+import ApiError from "../../error/ApiError";
 import { TAuthUser } from "../../interfaces/common";
 import prisma from "../../shared/prisma";
 import fieldValidityChecker from "../../utils/fieldValidityChecker";
@@ -126,6 +128,16 @@ const updateCampaign = async (id: string, payload: Record<string, any>) => {
 }
 
 const deleteCampaigns = async ({ ids }: { ids: string[] }) => {
+    const campaigns = await prisma.campaign.findMany({
+        where: {
+            id: {
+                in: ids
+            }
+        }
+    })
+    if (!campaigns?.length) {
+        throw new ApiError(httpStatus.NOT_FOUND, "Campaign not found")
+    }
     const result = await prisma.campaign.deleteMany({
         where: {
             id: {

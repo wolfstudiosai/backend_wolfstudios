@@ -1,6 +1,6 @@
+import httpStatus from "http-status";
 import catchAsync from "../../shared/catchAsync";
 import sendResponse from "../../shared/sendResponse";
-import httpStatus from "http-status";
 import { RecordsServices } from "./Records.services";
 
 const createRecord = catchAsync(async (req, res, next) => {
@@ -9,6 +9,16 @@ const createRecord = catchAsync(async (req, res, next) => {
     statusCode: httpStatus.CREATED,
     success: true,
     message: "Data management record created successfully",
+    data: result,
+  });
+});
+
+const createRecords = catchAsync(async (req, res, next) => {
+  const result = await RecordsServices.createRecord(req.body);
+  sendResponse(res, {
+    statusCode: httpStatus.CREATED,
+    success: true,
+    message: "Data management records created successfully",
     data: result,
   });
 });
@@ -38,4 +48,5 @@ export const RecordsControllers = {
   createRecord,
   getRecords,
   updateRecord,
+  createRecords
 };

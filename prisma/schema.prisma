@@ -34,64 +34,68 @@ model User {
 }
 
 model Records {
-  id                     String        @id @default(uuid())
-  title                  String
-  campaign               String?
-  product                String?
-  stakeholder            String?
-  posting_quality        String?
-  google_drive_files     String?
-  playbook_link          String?
-  uppromote_conversion   Int           @default(0)
-  asset_status           String?
-  month_uploaded         DateTime?
-  REVO_pinterest         String?       @default("not-posted")
-  PIN_accounts_used      String?       @default("not-posted")
-  pinterest_PIN_click    Int           @default(0)
-  pinterest_view         Int           @default(0)
-  REVO_instagram         String?
-  IG_like                Int           @default(0)
-  IG_comment             Int           @default(0)
-  IG_share               Int           @default(0)
-  IG_view                Int           @default(0)
-  IG_social_sets_used    String?
-  partner_IG_link        String?
-  REVO_twitter           String?       @default("not-posted")
-  REVO_tiktok            String?       @default("not-posted")
-  REVO_TT_view           Int           @default(0)
-  tiktok_accounts_used   String?       @default("not-posted")
-  partner_tiktok_link    String?       @default("not-posted")
-  partner_TT_like        Int           @default(0)
-  partner_TT_comment     Int           @default(0)
-  partner_TT_share       Int           @default(0)
-  partner_TT_view        Int           @default(0)
-  partner_TT_save        Int           @default(0)
-  TT_dummy_account_used  String?
-  YT_account_used        String?       @default("not-posted")
-  partner_YT_link        String?       @default("not-posted")
-  partner_YT_like        Int           @default(0)
-  partner_YT_comment     Int           @default(0)
-  partner_YT_view        Int           @default(0)
-  partner_YT_save        Int           @default(0)
-  REVO_clubrevo_youtube  String?       @default("not-posted")
-  REVO_youtube           String?       @default("not-posted")
-  YT_clubrevo_like       Int           @default(0)
-  YT_clubrevo_view       Int           @default(0)
-  YT_REVOMADIC_like      Int           @default(0)
-  YT_REVOMADIC_comment   Int           @default(0)
-  YT_REVOMADIC_share     Int           @default(0)
-  YT_REVOMADIC_view      Int           @default(0)
-  creator_status         String?
-  profile                String?
-  posting_status         PostingStatus @default(NOT_POSTED)
-  partner_HQ             String?
-  portfolio              String?
-  contributed_engagement Int           @default(0)
-  by_tags                String[]      @default([])
-  by_city                String?
-  all_internet_search    String?
-  created_at             DateTime      @default(now())
-  updated_at             DateTime      @updatedAt
+  id                             String        @id @default(uuid())
+  title                          String
+  campaign                       String?
+  product                        String?
+  stakeholder                    String?
+  posting_quality                String?
+  google_drive_files             String?
+  playbook_link                  String?
+  uppromote_conversion           Int           @default(0)
+  asset_status                   String?
+  month_uploaded                 DateTime?
+  REVO_pinterest                 String?       @default("not-posted")
+  pin_accounts_used              String?       @default("not-posted")
+  pinterest_PIN_click            Int           @default(0)
+  pinterest_view                 Int           @default(0)
+  REVO_instagram                 String?
+  IG_like                        Int           @default(0)
+  IG_comment                     Int           @default(0)
+  IG_share                       Int           @default(0)
+  IG_view                        Int           @default(0)
+  IG_social_sets_used            String?
+  partner_IG_link                String?
+  REVO_twitter                   String?       @default("not-posted")
+  REVO_tiktok                    String?       @default("not-posted")
+  REVO_TT_view                   Int           @default(0)
+  tiktok_accounts_used           String?       @default("not-posted")
+  partner_tiktok_link            String?       @default("not-posted")
+  partner_TT_like                Int           @default(0)
+  partner_TT_comments            Int           @default(0)
+  partner_TT_comment             String?
+  partner_TT_share               Int           @default(0)
+  partner_TT_view                Int           @default(0)
+  partner_TT_save                Int           @default(0)
+  TT_dummy_account_used          String?
+  YT_account_used                String?       @default("not-posted")
+  partner_YT_link                String?       @default("not-posted")
+  partner_YT_like                Int           @default(0)
+  partner_YT_comment             Int           @default(0)
+  partner_YT_view                Int           @default(0)
+  partner_YT_save                Int           @default(0)
+  REVO_clubrevo_youtube          String?       @default("not-posted")
+  REVO_youtube                   String?       @default("not-posted")
+  YT_clubrevo_like               Int           @default(0)
+  YT_clubrevo_view               Int           @default(0)
+  YT_REVOMADIC_like              Int           @default(0)
+  YT_REVOMADIC_comment           Int           @default(0)
+  YT_REVOMADIC_share             Int           @default(0)
+  YT_REVOMADIC_view              Int           @default(0)
+  creator_status                 String?
+  profile                        String?
+  posting_status                 PostingStatus @default(NOT_POSTED)
+  partner_hq                     String?
+  portfolio                      String?
+  contributed_engagement         Int           @default(0)
+  by_tags                        String?
+  by_city                        String?
+  AI_internet_search             String?
+  facilities_contributed_content String?
+  image                          String?
+  video                          String?
+  created_at                     DateTime      @default(now())
+  updated_at                     DateTime      @updatedAt
 
   @@map("records")
 }
@@ -105,7 +109,7 @@ model Campaign {
   end_date             DateTime?
   status               CampaignStatus
   thumbnail            String?
-  stackholder          String?
+  stakeholder          String?
   goal                 String?
   partner_compensation Int            @default(0)
   partner_deliverables String?
