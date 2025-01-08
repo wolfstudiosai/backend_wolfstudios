@@ -7,9 +7,8 @@ import {
   dataManagementSearchableFields,
   dataManagementSortableFields,
 } from "./Records.constants";
-import { TCreateRecordPayload } from "./Records.interface";
 
-const createRecord = async (payload: TCreateRecordPayload) => {
+const createRecord = async (payload: any) => {
   let month_uploaded = null;
   if (payload.month_uploaded)
     month_uploaded = new Date(payload.month_uploaded as string);
@@ -105,5 +104,5 @@ const updateRecord = async (id: string, payload: Record<string, any>) => {
 export const RecordsServices = {
   createRecord,
   getRecords,
-  updateRecord,
+  updateRecord
 };

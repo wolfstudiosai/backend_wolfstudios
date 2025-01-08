@@ -13,9 +13,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RecordsControllers = void 0;
+const http_status_1 = __importDefault(require("http-status"));
 const catchAsync_1 = __importDefault(require("../../shared/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../shared/sendResponse"));
-const http_status_1 = __importDefault(require("http-status"));
 const Records_services_1 = require("./Records.services");
 const createRecord = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield Records_services_1.RecordsServices.createRecord(req.body);
@@ -48,5 +48,5 @@ const updateRecord = (0, catchAsync_1.default)((req, res, next) => __awaiter(voi
 exports.RecordsControllers = {
     createRecord,
     getRecords,
-    updateRecord,
+    updateRecord
 };

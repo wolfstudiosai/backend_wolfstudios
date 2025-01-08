@@ -1,6 +1,6 @@
+import httpStatus from "http-status";
 import catchAsync from "../../shared/catchAsync";
 import sendResponse from "../../shared/sendResponse";
-import httpStatus from "http-status";
 import { RecordsServices } from "./Records.services";
 
 const createRecord = catchAsync(async (req, res, next) => {
@@ -37,5 +37,5 @@ const updateRecord = catchAsync(async (req, res, next) => {
 export const RecordsControllers = {
   createRecord,
   getRecords,
-  updateRecord,
+  updateRecord
 };

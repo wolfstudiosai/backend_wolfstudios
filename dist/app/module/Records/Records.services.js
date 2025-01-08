@@ -109,5 +109,5 @@ const updateRecord = (id, payload) => __awaiter(void 0, void 0, void 0, function
 exports.RecordsServices = {
     createRecord,
     getRecords,
-    updateRecord,
+    updateRecord
 };

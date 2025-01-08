@@ -1,6 +1,12 @@
-import { Prisma, UserStatus } from "@prisma/client";
+import { Prisma } from "@prisma/client";
+import sharp from "sharp";
+import config from "../../config";
 import { sortOrderType } from "../../constants/common";
 import ApiError from "../../error/ApiError";
+import { TAuthUser } from "../../interfaces/common";
+import { TFile } from "../../interfaces/file";
+import prisma from "../../shared/prisma";
+import supabase from "../../shared/supabase";
 import fieldValidityChecker from "../../utils/fieldValidityChecker";
 import pagination from "../../utils/pagination";
 import {
@@ -8,11 +14,6 @@ import {
   userSelectedFields,
   userSortableFields,
 } from "./User.constants";
-import prisma from "../../shared/prisma";
-import { TAuthUser } from "../../interfaces/common";
-import { TFile } from "../../interfaces/file";
-import { fileUploader } from "../../utils/fileUploader";
-import { TImage } from "../Image/Image.interfaces";
 
 const getUsers = async (query: Record<string, any>) => {
   const { searchTerm, page, limit, sortBy, sortOrder, id, ...remainingQuery } =
@@ -100,57 +101,82 @@ const getMe = async (user: TAuthUser | undefined) => {
   return result;
 };
 
+
 const updateProfile = async (
-  user: TAuthUser | undefined,
+  user: TAuthUser,
   payload: Record<string, any>,
   file: TFile | undefined
 ) => {
-  const image: Record<string, any> = {};
+  let profilePic;
+
+
   if (file) {
+    const metadata = await sharp(file.buffer).metadata();
+    const fileName = `${Date.now()}_${file.originalname}`;
+    const { data } = await supabase.storage
+      .from(config.supabase_bucket_general)
+      .upload(fileName, file.buffer, {
+        contentType: file.mimetype,
+      });
+
+
+    if (!data?.id) {
+      throw new ApiError(
+        httpStatus.INTERNAL_SERVER_ERROR,
+        "Failed to upload profile picture"
+      );
+    }
+
+
+    const image = {
+      user_id: user.id,
+      name: file.originalname,
+      alt_text: file.originalname,
+      type: file.mimetype,
+      size: file.size,
+      width: metadata.width || 0,
+      height: metadata.height || 0,
+      path: `/${config.supabase_bucket_general}/${data.path}`,
+      bucket_id: data.id,
+    };
+
+
+    profilePic = await prisma.file.create({
+      data: image,
+    });
+
+
     const userInfo = await prisma.user.findUniqueOrThrow({
       where: {
-        id: user?.id,
-      },
-      select: {
-        profile_pic: true,
+        id: user.id,
       },
     });
 
+
     if (userInfo.profile_pic) {
-      const profile_pic_info = await prisma.image.findFirst({
+      const profilePic = await prisma.file.findFirst({
         where: {
           path: userInfo.profile_pic,
         },
       });
-      if (profile_pic_info) {
-        await fileUploader.deleteToCloudinary([profile_pic_info.cloud_id]);
-        await prisma.image.delete({
+      if (profilePic) {
+        await supabase.storage
+          .from(config.supabase_bucket_general)
+          .remove([profilePic.path.split("/").pop() || ""]);
+        await prisma.file.delete({
           where: {
-            id: profile_pic_info.id,
+            id: profilePic.id,
           },
         });
       }
     }
-
-    const convertedFile = Buffer.from(file.buffer).toString("base64");
-    const dataURI = `data:${file.mimetype};base64,${convertedFile}`;
-    const cludinaryResponse = await fileUploader.uploadToCloudinary(dataURI);
-    image["path"] = cludinaryResponse?.secure_url as string;
-    image["cloud_id"] = cludinaryResponse?.public_id as string;
-    image["name"] = file.originalname;
   }
 
-  let profilePic;
 
-  if (image.path && image.cloud_id) {
-    profilePic = await prisma.image.create({
-      data: image as TImage,
-    });
-  }
-
-  if (profilePic?.id) {
+  if (profilePic?.path) {
     payload.profile_pic = profilePic.path;
   }
+
 
   const result = prisma.user.update({
     where: {
@@ -158,12 +184,14 @@ const updateProfile = async (
     },
     data: payload,
     select: {
-      ...userSelectedFields,
+      ...userSelectedFields
     },
   });
 
+
   return result;
 };
+
 
 const updateUser = async (id: string, payload: Record<string, any>) => {
   const result = await prisma.user.update({

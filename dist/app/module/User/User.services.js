@@ -24,12 +24,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserServices = void 0;
+const sharp_1 = __importDefault(require("sharp"));
+const config_1 = __importDefault(require("../../config"));
 const common_1 = require("../../constants/common");
+const ApiError_1 = __importDefault(require("../../error/ApiError"));
+const prisma_1 = __importDefault(require("../../shared/prisma"));
+const supabase_1 = __importDefault(require("../../shared/supabase"));
 const fieldValidityChecker_1 = __importDefault(require("../../utils/fieldValidityChecker"));
 const pagination_1 = __importDefault(require("../../utils/pagination"));
 const User_constants_1 = require("./User.constants");
-const prisma_1 = __importDefault(require("../../shared/prisma"));
-const fileUploader_1 = require("../../utils/fileUploader");
 const getUsers = (query) => __awaiter(void 0, void 0, void 0, function* () {
     const { searchTerm, page, limit, sortBy, sortOrder, id } = query, remainingQuery = __rest(query, ["searchTerm", "page", "limit", "sortBy", "sortOrder", "id"]);
     if (sortBy) {
@@ -100,45 +103,56 @@ const getMe = (user) => __awaiter(void 0, void 0, void 0, function* () {
     return result;
 });
 const updateProfile = (user, payload, file) => __awaiter(void 0, void 0, void 0, function* () {
-    const image = {};
+    let profilePic;
     if (file) {
+        const metadata = yield (0, sharp_1.default)(file.buffer).metadata();
+        const fileName = `${Date.now()}_${file.originalname}`;
+        const { data } = yield supabase_1.default.storage
+            .from(config_1.default.supabase_bucket_general)
+            .upload(fileName, file.buffer, {
+            contentType: file.mimetype,
+        });
+        if (!(data === null || data === void 0 ? void 0 : data.id)) {
+            throw new ApiError_1.default(httpStatus.INTERNAL_SERVER_ERROR, "Failed to upload profile picture");
+        }
+        const image = {
+            user_id: user.id,
+            name: file.originalname,
+            alt_text: file.originalname,
+            type: file.mimetype,
+            size: file.size,
+            width: metadata.width || 0,
+            height: metadata.height || 0,
+            path: `/${config_1.default.supabase_bucket_general}/${data.path}`,
+            bucket_id: data.id,
+        };
+        profilePic = yield prisma_1.default.file.create({
+            data: image,
+        });
         const userInfo = yield prisma_1.default.user.findUniqueOrThrow({
             where: {
-                id: user === null || user === void 0 ? void 0 : user.id,
-            },
-            select: {
-                profile_pic: true,
+                id: user.id,
             },
         });
         if (userInfo.profile_pic) {
-            const profile_pic_info = yield prisma_1.default.image.findFirst({
+            const profilePic = yield prisma_1.default.file.findFirst({
                 where: {
                     path: userInfo.profile_pic,
                 },
             });
-            if (profile_pic_info) {
-                yield fileUploader_1.fileUploader.deleteToCloudinary([profile_pic_info.cloud_id]);
-                yield prisma_1.default.image.delete({
+            if (profilePic) {
+                yield supabase_1.default.storage
+                    .from(config_1.default.supabase_bucket_general)
+                    .remove([profilePic.path.split("/").pop() || ""]);
+                yield prisma_1.default.file.delete({
                     where: {
-                        id: profile_pic_info.id,
+                        id: profilePic.id,
                     },
                 });
             }
         }
-        const convertedFile = Buffer.from(file.buffer).toString("base64");
-        const dataURI = `data:${file.mimetype};base64,${convertedFile}`;
-        const cludinaryResponse = yield fileUploader_1.fileUploader.uploadToCloudinary(dataURI);
-        image["path"] = cludinaryResponse === null || cludinaryResponse === void 0 ? void 0 : cludinaryResponse.secure_url;
-        image["cloud_id"] = cludinaryResponse === null || cludinaryResponse === void 0 ? void 0 : cludinaryResponse.public_id;
-        image["name"] = file.originalname;
     }
-    let profilePic;
-    if (image.path && image.cloud_id) {
-        profilePic = yield prisma_1.default.image.create({
-            data: image,
-        });
-    }
-    if (profilePic === null || profilePic === void 0 ? void 0 : profilePic.id) {
+    if (profilePic === null || profilePic === void 0 ? void 0 : profilePic.path) {
         payload.profile_pic = profilePic.path;
     }
     const result = prisma_1.default.user.update({

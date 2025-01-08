@@ -4,10 +4,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RecordsRoutes = void 0;
-const express_1 = require("express");
-const validateRequest_1 = __importDefault(require("../../middlewares/validateRequest"));
-const auth_1 = __importDefault(require("../../middlewares/auth"));
 const client_1 = require("@prisma/client");
+const express_1 = require("express");
+const auth_1 = __importDefault(require("../../middlewares/auth"));
+const validateRequest_1 = __importDefault(require("../../middlewares/validateRequest"));
 const Records_controllers_1 = require("./Records.controllers");
 const Records_validations_1 = require("./Records.validations");
 const router = (0, express_1.Router)();

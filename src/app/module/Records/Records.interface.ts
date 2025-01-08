@@ -10,7 +10,7 @@ export type TCreateRecordPayload = {
   asset_status?: string;
   month_uploaded?: string;
   REVO_pinterest?: string;
-  PIN_accounts_used?: string;
+  pin_accounts_used?: string;
   pinterest_PIN_click?: number;
   pinterest_view?: number;
   REVO_instagram?: string;
@@ -26,7 +26,8 @@ export type TCreateRecordPayload = {
   tiktok_accounts_used?: string;
   partner_tiktok_link?: string;
   partner_TT_like?: number;
-  partner_TT_comment?: number;
+  partner_TT_comments?: number;
+  partner_TT_comment?: string;
   partner_TT_share?: number;
   partner_TT_view?: number;
   partner_TT_save?: number;
@@ -48,10 +49,13 @@ export type TCreateRecordPayload = {
   creator_status?: string;
   profile?: string;
   posting_status?: "POSTED" | "NOT_POSTED";
-  partner_HQ?: string;
+  partner_hq?: string;
   portfolio?: string;
   contributed_engagement?: number;
-  by_tags?: string[];
+  by_tags?: string;
   by_city?: string;
-  all_internet_search?: string;
+  AI_internet_search?: string;
+  facilities_contributed_content?: string;
+  image?: string;
+  video?: string;
 };
