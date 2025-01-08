@@ -5,6 +5,57 @@
  *   description: Record
  */
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Record:
+ *       type: object
+ *       properties:
+ *         title:
+ *           type: string
+ *           example: "Sample Title"
+ *         campaign:
+ *           type: string
+ *           example: "Summer Campaign"
+ *         product:
+ *           type: string
+ *           example: "Product Name"
+ *         stakeholder:
+ *           type: string
+ *           example: "John Doe"
+ *         posting_quality:
+ *           type: string
+ *           example: "High"
+ *         google_drive_files:
+ *           type: string
+ *           example: "https://drive.google.com/file/d/123456789"
+ *         playbook_link:
+ *           type: string
+ *           example: "https://example.com/playbook"
+ *         uppromote_conversion:
+ *           type: integer
+ *           example: 100
+ *         asset_status:
+ *           type: string
+ *           example: "Active"
+ *         month_uploaded:
+ *           type: string
+ *           example: "2023-12"
+ *         REVO_pinterest:
+ *           type: string
+ *           example: "https://www.pinterest.com/sample"
+ *         pin_accounts_used:
+ *           type: string
+ *           example: "Account 1, Account 2"
+ *         pinterest_PIN_click:
+ *           type: integer
+ *           example: 100
+ *         pinterest_view:
+ *           type: integer
+ *           example: 200
+ */
+
 // Get Records
 
 /**
