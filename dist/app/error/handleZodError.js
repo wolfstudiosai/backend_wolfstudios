@@ -5,10 +5,14 @@ const handleZodError = (err) => {
         path: issue.path[issue.path.length - 1],
         message: issue.message,
     }));
+    let message = "Validation Error";
+    if (errorSources === null || errorSources === void 0 ? void 0 : errorSources.length) {
+        message = errorSources.map((item) => item.message).join(" | ");
+    }
     const statusCode = 400;
     return {
         statusCode,
-        message: "Validation Error",
+        message,
         errorSources,
     };
 };

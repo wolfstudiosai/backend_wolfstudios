@@ -24,7 +24,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RecordsServices = void 0;
+const http_status_1 = __importDefault(require("http-status"));
 const common_1 = require("../../constants/common");
+const ApiError_1 = __importDefault(require("../../error/ApiError"));
 const prisma_1 = __importDefault(require("../../shared/prisma"));
 const fieldValidityChecker_1 = __importDefault(require("../../utils/fieldValidityChecker"));
 const pagination_1 = __importDefault(require("../../utils/pagination"));
@@ -106,8 +108,32 @@ const updateRecord = (id, payload) => __awaiter(void 0, void 0, void 0, function
     });
     return result;
 });
+const deleteRecords = (_a) => __awaiter(void 0, [_a], void 0, function* ({ ids }) {
+    const records = yield prisma_1.default.records.findMany({
+        where: {
+            id: {
+                in: ids
+            }
+        }
+    });
+    if (!(records === null || records === void 0 ? void 0 : records.length)) {
+        throw new ApiError_1.default(http_status_1.default.NOT_FOUND, "No record found to delete");
+    }
+    const result = yield prisma_1.default.records.deleteMany({
+        where: {
+            id: {
+                in: ids
+            }
+        }
+    });
+    return {
+        deleted_count: result.count,
+        message: `${result.count} records deleted successfully`
+    };
+});
 exports.RecordsServices = {
     createRecord,
     getRecords,
-    updateRecord
+    updateRecord,
+    deleteRecords
 };

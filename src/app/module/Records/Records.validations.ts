@@ -142,7 +142,14 @@ const updateRecordValidationSchema = z.object({
   }),
 });
 
+const deleteRecordsValidationSchema = z.object({
+  body: z.object({
+    ids: z.array(z.string({ invalid_type_error: "Id should be a text" }).regex(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/, "Invalid ID"), { message: "Array of ids is required" }).min(1, "Id is required")
+  })
+});
+
 export const RecordsValidations = {
   createRecordValidationSchema,
   updateRecordValidationSchema,
+  deleteRecordsValidationSchema
 };

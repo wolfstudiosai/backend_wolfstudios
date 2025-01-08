@@ -302,3 +302,59 @@
  *       400:
  *         description: Bad request.
  */
+
+
+/**
+ * @swagger
+ * /record/delete-records:
+ *   delete:
+ *     summary: Delete records
+ *     description: Deletes a list of records.
+ *     tags: [Record]
+ *     security:
+ *       - AdminAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               ids:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 description: List of record IDs to delete.
+ *                 example: ["2c423e29-900b-4d8e-b442-1515ec95c0af"]
+ *     responses:
+ *       200:
+ *         description: If records are deleted successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   description: If records are deleted successfully.
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   description: Success message.
+ *                   example: "Records deleted successfully."
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     deleted_count:
+ *                       type: number
+ *                       description: Number of records deleted.
+ *                       example: 1
+ *                     message:
+ *                       type: string
+ *                       description: Success message.
+ *                       example: "1 records deleted successfully."
+ *       400:
+ *         description: Bad request.
+ *       401:
+ *         description: Unauthorized. Only admin can delete records.
+ */

@@ -34,8 +34,19 @@ const updateRecord = catchAsync(async (req, res, next) => {
   });
 });
 
+const deleteRecords = catchAsync(async (req, res, next) => {
+  const result = await RecordsServices.deleteRecords(req.body);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Records deleted successfully",
+    data: result,
+  });
+});
+
 export const RecordsControllers = {
   createRecord,
   getRecords,
-  updateRecord
+  updateRecord,
+  deleteRecords
 };
