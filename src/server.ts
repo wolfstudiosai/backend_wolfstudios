@@ -1,15 +1,25 @@
 import { Server } from "http";
 import app from "./app";
+import cors from 'cors';
 import config from "./app/config";
 import cron from "node-cron";
 import clearOldOtps from "./app/utils/clearOldOtps";
+import swaggerUi from "swagger-ui-express";
+import swaggerSpec from "./swagger";
+import * as dotenv from 'dotenv';
+
+// Load environment variables from .env file
+dotenv.config();
 
 const port = config.port || 9000;
 
 let server: Server;
-
+app.use(cors());
 async function main() {
   try {
+    // Serve the Swagger UI at the /api-docs route
+    app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
     server = app.listen(port, () => {
       console.log(`Wolfstudios server is running on port ${port}`);
     });
