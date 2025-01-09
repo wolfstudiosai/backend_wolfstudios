@@ -27,4 +27,11 @@ router.patch(
   RecordsControllers.updateRecord
 );
 
+router.delete(
+  "/delete-records",
+  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
+  validateRequest(RecordsValidations.deleteRecordsValidationSchema),
+  RecordsControllers.deleteRecords
+);
+
 export const RecordsRoutes = router;

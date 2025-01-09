@@ -142,7 +142,13 @@ const updateRecordValidationSchema = zod_1.z.object({
         video: zod_1.z.string().optional()
     }),
 });
+const deleteRecordsValidationSchema = zod_1.z.object({
+    body: zod_1.z.object({
+        ids: zod_1.z.array(zod_1.z.string({ invalid_type_error: "Id should be a text" }).regex(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/, "Invalid ID"), { message: "Array of ids is required" }).min(1, "Id is required")
+    })
+});
 exports.RecordsValidations = {
     createRecordValidationSchema,
     updateRecordValidationSchema,
+    deleteRecordsValidationSchema
 };

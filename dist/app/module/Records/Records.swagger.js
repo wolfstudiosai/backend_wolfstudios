@@ -5,6 +5,56 @@
  *   name: Record
  *   description: Record
  */
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Record:
+ *       type: object
+ *       properties:
+ *         title:
+ *           type: string
+ *           example: "Sample Title"
+ *         campaign:
+ *           type: string
+ *           example: "Summer Campaign"
+ *         product:
+ *           type: string
+ *           example: "Product Name"
+ *         stakeholder:
+ *           type: string
+ *           example: "John Doe"
+ *         posting_quality:
+ *           type: string
+ *           example: "High"
+ *         google_drive_files:
+ *           type: string
+ *           example: "https://drive.google.com/file/d/123456789"
+ *         playbook_link:
+ *           type: string
+ *           example: "https://example.com/playbook"
+ *         uppromote_conversion:
+ *           type: integer
+ *           example: 100
+ *         asset_status:
+ *           type: string
+ *           example: "Active"
+ *         month_uploaded:
+ *           type: string
+ *           example: "2023-12"
+ *         REVO_pinterest:
+ *           type: string
+ *           example: "https://www.pinterest.com/sample"
+ *         pin_accounts_used:
+ *           type: string
+ *           example: "Account 1, Account 2"
+ *         pinterest_PIN_click:
+ *           type: integer
+ *           example: 100
+ *         pinterest_view:
+ *           type: integer
+ *           example: 200
+ */
 // Get Records
 /**
  * @swagger
@@ -298,4 +348,58 @@
  *         description: Record updated successfully.
  *       400:
  *         description: Bad request.
+ */
+/**
+ * @swagger
+ * /record/delete-records:
+ *   delete:
+ *     summary: Delete records
+ *     description: Deletes a list of records.
+ *     tags: [Record]
+ *     security:
+ *       - AdminAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               ids:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 description: List of record IDs to delete.
+ *                 example: ["2c423e29-900b-4d8e-b442-1515ec95c0af"]
+ *     responses:
+ *       200:
+ *         description: If records are deleted successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   description: If records are deleted successfully.
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   description: Success message.
+ *                   example: "Records deleted successfully."
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     deleted_count:
+ *                       type: number
+ *                       description: Number of records deleted.
+ *                       example: 1
+ *                     message:
+ *                       type: string
+ *                       description: Success message.
+ *                       example: "1 records deleted successfully."
+ *       400:
+ *         description: Bad request.
+ *       401:
+ *         description: Unauthorized. Only admin can delete records.
  */

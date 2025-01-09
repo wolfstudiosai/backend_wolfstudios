@@ -7,11 +7,17 @@ const handleZodError = (err: ZodError): TGenericErrorResponse => {
     message: issue.message,
   }));
 
+  let message = "Validation Error";
+
+  if (errorSources?.length) {
+    message = errorSources.map((item) => item.message).join(" | ")
+  }
+
   const statusCode = 400;
 
   return {
     statusCode,
-    message: "Validation Error",
+    message,
     errorSources,
   };
 };

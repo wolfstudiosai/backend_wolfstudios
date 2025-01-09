@@ -45,8 +45,18 @@ const updateRecord = (0, catchAsync_1.default)((req, res, next) => __awaiter(voi
         data: result,
     });
 }));
+const deleteRecords = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield Records_services_1.RecordsServices.deleteRecords(req.body);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: "Records deleted successfully",
+        data: result,
+    });
+}));
 exports.RecordsControllers = {
     createRecord,
     getRecords,
-    updateRecord
+    updateRecord,
+    deleteRecords
 };
