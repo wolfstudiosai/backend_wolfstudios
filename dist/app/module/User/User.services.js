@@ -174,9 +174,36 @@ const updateUser = (id, payload) => __awaiter(void 0, void 0, void 0, function* 
     });
     return result;
 });
+const deleteUsers = (_a) => __awaiter(void 0, [_a], void 0, function* ({ ids }) {
+    const usrs = yield prisma_1.default.user.findMany({
+        where: {
+            id: {
+                in: ids,
+            },
+        },
+    });
+    if (!(usrs === null || usrs === void 0 ? void 0 : usrs.length)) {
+        throw new ApiError_1.default(httpStatus.NOT_FOUND, "User not found");
+    }
+    const result = yield prisma_1.default.user.updateMany({
+        where: {
+            id: {
+                in: ids,
+            },
+        },
+        data: {
+            is_deleted: true,
+        },
+    });
+    return {
+        deleted_count: result.count,
+        message: `${result.count} user deleted successfully`,
+    };
+});
 exports.UserServices = {
     updateUser,
     getUsers,
     getMe,
     updateProfile,
+    deleteUsers,
 };
