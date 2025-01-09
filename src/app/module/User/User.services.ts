@@ -101,14 +101,12 @@ const getMe = async (user: TAuthUser | undefined) => {
   return result;
 };
 
-
 const updateProfile = async (
   user: TAuthUser,
   payload: Record<string, any>,
   file: TFile | undefined
 ) => {
   let profilePic;
-
 
   if (file) {
     const metadata = await sharp(file.buffer).metadata();
@@ -119,14 +117,12 @@ const updateProfile = async (
         contentType: file.mimetype,
       });
 
-
     if (!data?.id) {
       throw new ApiError(
         httpStatus.INTERNAL_SERVER_ERROR,
         "Failed to upload profile picture"
       );
     }
-
 
     const image = {
       user_id: user.id,
@@ -140,18 +136,15 @@ const updateProfile = async (
       bucket_id: data.id,
     };
 
-
     profilePic = await prisma.file.create({
       data: image,
     });
-
 
     const userInfo = await prisma.user.findUniqueOrThrow({
       where: {
         id: user.id,
       },
     });
-
 
     if (userInfo.profile_pic) {
       const profilePic = await prisma.file.findFirst({
@@ -172,11 +165,9 @@ const updateProfile = async (
     }
   }
 
-
   if (profilePic?.path) {
     payload.profile_pic = profilePic.path;
   }
-
 
   const result = prisma.user.update({
     where: {
@@ -184,14 +175,12 @@ const updateProfile = async (
     },
     data: payload,
     select: {
-      ...userSelectedFields
+      ...userSelectedFields,
     },
   });
 
-
   return result;
 };
-
 
 const updateUser = async (id: string, payload: Record<string, any>) => {
   const result = await prisma.user.update({
@@ -206,9 +195,36 @@ const updateUser = async (id: string, payload: Record<string, any>) => {
   return result;
 };
 
+const deleteUsers = async ({ ids }: { ids: string[] }) => {
+  const usrs = await prisma.user.findMany({
+    where: {
+      id: {
+        in: ids,
+      },
+    },
+  });
+
+  if (!usrs?.length) {
+    throw new ApiError(httpStatus.NOT_FOUND, "User not found");
+  }
+
+  const result = await prisma.user.deleteMany({
+    where: {
+      id: {
+        in: ids,
+      },
+    },
+  });
+  return {
+    deleted_count: result.count,
+    message: `${result.count} user deleted successfully`,
+  };
+};
+
 export const UserServices = {
   updateUser,
   getUsers,
   getMe,
   updateProfile,
+  deleteUsers,
 };
