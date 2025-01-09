@@ -31,6 +31,7 @@ const updateUserValidationSchema = z.object({
     .object({
       contact_number: z
         .string({ invalid_type_error: "Contact number should be a text" })
+        .nullable()
         .optional(),
       role: z.enum(Object.values(UserRole) as [string, ...string[]]).optional(),
       status: z
