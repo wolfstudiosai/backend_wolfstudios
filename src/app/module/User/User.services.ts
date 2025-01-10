@@ -208,11 +208,14 @@ const deleteUsers = async ({ ids }: { ids: string[] }) => {
     throw new ApiError(httpStatus.NOT_FOUND, "User not found");
   }
 
-  const result = await prisma.user.deleteMany({
+  const result = await prisma.user.updateMany({
     where: {
       id: {
         in: ids,
       },
+    },
+    data: {
+      is_deleted: true,
     },
   });
   return {

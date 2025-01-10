@@ -57,9 +57,19 @@ const updateUser = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 
         data: result,
     });
 }));
+const deleteUsers = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield User_services_1.UserServices.deleteUsers(req.body);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: "Users deleted successfully",
+        data: result,
+    });
+}));
 exports.UserControllers = {
     getUsers,
     getMe,
     updateProfile,
     updateUser,
+    deleteUsers,
 };
