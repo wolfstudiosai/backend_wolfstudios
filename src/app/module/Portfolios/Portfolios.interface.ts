@@ -1,4 +1,4 @@
-import { EPortfolioType } from "./Portfolios.enum";
+import { EPortfolioType, EPortfolioStatus } from "./Portfolios.enum";
 
 export interface ICreatePortfolio {
     type: EPortfolioType;
@@ -13,4 +13,5 @@ export interface ICreatePortfolio {
     creation_10_images_services_provide?: string;
     brand?: string;
     deliverables?: string;
+    status: EPortfolioStatus;
 }

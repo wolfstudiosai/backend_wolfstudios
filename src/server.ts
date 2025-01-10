@@ -7,6 +7,7 @@ import clearOldOtps from "./app/utils/clearOldOtps";
 import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./swagger";
 import * as dotenv from 'dotenv';
+import express from "express";
 
 // Load environment variables from .env file
 dotenv.config();
@@ -15,6 +16,7 @@ const port = config.port || 9000;
 
 let server: Server;
 app.use(cors());
+app.use(express.json());
 async function main() {
   try {
     // Serve the Swagger UI at the /api-docs route

@@ -8,35 +8,35 @@ import { PortfolioValidations } from "./Portfolios.validations";
 const router = Router();
 
 router.get(
-  "/portfolios",
+  "/",
   auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
   PortfolioController.getPortofolios
 );
 
 router.get(
-  "/portfolios/:id",
+  "/:id",
   auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
-  PortfolioController.getPortofolios
+  PortfolioController.getPortofolioById
 );
 
 router.post(
-  "/add-portfolios",
+  "/add-portfolio",
   auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
-  validateRequest(PortfolioValidations.createPortfolioValidationSchema),
+  // validateRequest(PortfolioValidations.createPortfolioValidationSchema),
   PortfolioController.createPortofolio
 );
 
 router.patch(
-  "/update-portfolios/:id",
+  "/update-portfolio/:id",
   auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
-  validateRequest(PortfolioValidations.updatePortfolioValidationSchema),
+  // validateRequest(PortfolioValidations.updatePortfolioValidationSchema),
   PortfolioController.updatePortofolio
 );
 
 router.delete(
-  "/delete-portfolios/:id",
+  "/delete-portfolio",
   auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
-  PortfolioController.updatePortofolio
+  PortfolioController.deletePortofolio
 );
 
 export const PortfolioRoutes = router;

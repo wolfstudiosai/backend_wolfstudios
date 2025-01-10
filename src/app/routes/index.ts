@@ -30,7 +30,7 @@ const routes = [
     route: FileRoutes,
   },
   {
-    path: "/portfolio",
+    path: "/portfolios",
     route: PortfolioRoutes,
   },
 ];

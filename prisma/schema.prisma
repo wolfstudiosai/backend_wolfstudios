@@ -14,21 +14,22 @@ datasource db {
 }
 
 model User {
-  id                  String     @id @default(uuid())
+  id                  String      @id @default(uuid())
   first_name          String
   last_name           String?
-  email               String     @unique
+  email               String      @unique
   password            String
   contact_number      String?
   profile_pic         String?
-  status              UserStatus @default(ACTIVE)
-  role                UserRole   @default(USER)
-  is_deleted          Boolean    @default(false)
-  password_changed_at DateTime   @default(now())
-  created_at          DateTime   @default(now())
-  updated_at          DateTime   @updatedAt
+  status              UserStatus  @default(ACTIVE)
+  role                UserRole    @default(USER)
+  is_deleted          Boolean     @default(false)
+  password_changed_at DateTime    @default(now())
+  created_at          DateTime    @default(now())
+  updated_at          DateTime    @updatedAt
   Campaign            Campaign[]
   File                File[]
+  Portfolio           Portfolio[]
 
   @@map("users")
 }
@@ -161,6 +162,35 @@ model OTP {
   @@map("otp")
 }
 
+model Portfolio {
+  id                                  String          @id @default(uuid())
+  name                                String
+  slug                                String
+  description                         String?
+  type                                PortfolioTypes
+  model                               String?
+  days_location                       String?
+  sessions                            String?
+  producer                            String?
+  production_studio                   String?
+  location                            String?
+  talent                              String?
+  creation_10_images_services_provide String?
+  brand                               String?
+  deliverables                        String?
+  status                              PortfolioStatus
+  thumbnail                           String?
+  image_inspiration                   String?
+  video_inspiration                   String?
+  user_id                             String
+  created_at                          DateTime        @default(now())
+  updated_at                          DateTime        @updatedAt
+
+  created_by User @relation(fields: [user_id], references: [id])
+
+  @@map("portfolios")
+}
+
 enum UserStatus {
   ACTIVE
   BLOCKED
@@ -178,6 +208,36 @@ enum PostingStatus {
 }
 
 enum CampaignStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  COMPLETED
+}
+
+enum PortfolioTypes {
+  VLOGS
+  ECOMMERCE
+  FASHION
+  BRANDING
+  UGC
+  MUSIC
+  BW
+  CREATORS
+  BEAUTY
+  PUBLICATIONS
+  SPORT
+  PORDUCTS
+  SWIM
+  COMMERCIAL
+  LIFESTYLE
+  PORTRAITURE
+  FILM
+  EVENTS
+  MOOD
+  HOME
+}
+
+enum PortfolioStatus {
   PENDING
   APPROVED
   REJECTED
