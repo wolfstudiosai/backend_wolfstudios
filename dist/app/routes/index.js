@@ -6,6 +6,7 @@ const Campaign_routes_1 = require("../module/Campaign/Campaign.routes");
 const File_routes_1 = require("../module/File/File.routes");
 const Records_routes_1 = require("../module/Records/Records.routes");
 const User_routes_1 = require("../module/User/User.routes");
+const Portfolios_route_1 = require("../module/Portfolios/Portfolios.route");
 const router = (0, express_1.Router)();
 const routes = [
     {
@@ -27,6 +28,10 @@ const routes = [
     {
         path: "/file",
         route: File_routes_1.FileRoutes,
+    },
+    {
+        path: "/portfolios",
+        route: Portfolios_route_1.PortfolioRoutes,
     },
 ];
 routes.forEach((route) => router.use(route.path, route.route));

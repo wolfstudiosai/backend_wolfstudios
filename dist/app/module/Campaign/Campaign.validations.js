@@ -88,6 +88,7 @@ const updateCampaignValidationSchema = zod_1.z.object({
             url: zod_1.z.string(),
         }))
             .optional(),
+        featured: zod_1.z.boolean().optional(),
     })
         .strict(),
 });

@@ -1,0 +1,33 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.EPortfolioStatus = exports.EPortfolioType = void 0;
+var EPortfolioType;
+(function (EPortfolioType) {
+    EPortfolioType["Vlogs"] = "VLOGS";
+    EPortfolioType["Ecommerce"] = "ECOMMERCE";
+    EPortfolioType["Fashion"] = "FASHION";
+    EPortfolioType["Branding"] = "BRANDING";
+    EPortfolioType["UGC"] = "UGC";
+    EPortfolioType["Music"] = "MUSIC";
+    EPortfolioType["BW"] = "BW";
+    EPortfolioType["Creators"] = "CREATORS";
+    EPortfolioType["Beauty"] = "BEAUTY";
+    EPortfolioType["Publications"] = "PUBLICATIONS";
+    EPortfolioType["Sport"] = "SPORT";
+    EPortfolioType["Products"] = "PRODUCTS";
+    EPortfolioType["Swim"] = "SWIM";
+    EPortfolioType["Commercial"] = "COMMERCIALS";
+    EPortfolioType["Lifestyle"] = "LIFESTYLE";
+    EPortfolioType["Portraiture"] = "PORTRAITURE";
+    EPortfolioType["Film"] = "FILM";
+    EPortfolioType["Events"] = "EVENTS";
+    EPortfolioType["Mood"] = "MOOD";
+    EPortfolioType["Home"] = "HOME";
+})(EPortfolioType || (exports.EPortfolioType = EPortfolioType = {}));
+var EPortfolioStatus;
+(function (EPortfolioStatus) {
+    EPortfolioStatus["Pending"] = "PENDING";
+    EPortfolioStatus["Approved"] = "APPROVED";
+    EPortfolioStatus["Rejejcted"] = "REJECTED";
+    EPortfolioStatus["Completed"] = "COMPLETED";
+})(EPortfolioStatus || (exports.EPortfolioStatus = EPortfolioStatus = {}));
