@@ -124,6 +124,7 @@ model Campaign {
   product_expense      Int            @default(0)
   partner_expense      Int            @default(0)
   social_platforms     Json?
+  featured             Boolean        @default(false)
   user_id              String
   created_at           DateTime       @default(now())
   updated_at           DateTime       @updatedAt

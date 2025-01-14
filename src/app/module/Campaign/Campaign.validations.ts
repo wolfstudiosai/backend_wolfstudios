@@ -91,6 +91,7 @@ const updateCampaignValidationSchema = z.object({
           })
         )
         .optional(),
+      featured: z.boolean().optional(),
     })
     .strict(),
 });
