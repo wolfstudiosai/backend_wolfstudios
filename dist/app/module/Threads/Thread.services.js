@@ -193,6 +193,10 @@ const getThreadMessages = (threadId, onNewMessage) => __awaiter(void 0, void 0, 
             avatar: message.author.profile_pic || '',
             isActive: message.author.status,
         },
+        file_url: message.file_url,
+        isEdited: message.is_edited,
+        parentMessageId: message.parent_message_id,
+        read_status: message.read_status,
     }));
 });
 exports.getThreadMessages = getThreadMessages;
