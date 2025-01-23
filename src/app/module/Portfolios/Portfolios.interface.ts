@@ -1,17 +1,15 @@
-import { EPortfolioType, EPortfolioStatus } from "./Portfolios.enum";
-
 export interface ICreatePortfolio {
-    type: EPortfolioType;
-    name: string;
-    model?: string;
-    days_location?: string;
-    sessions?: string;
-    producer?: string;
-    production_studio?: string;
-    location?: string;
-    talent?: string;
-    creation_10_images_services_provide?: string;
-    brand?: string;
-    deliverables?: string;
-    status: EPortfolioStatus;
+    project_title: string;
+    category?: string;
+    video_url?: string;
+    hero_image?: string;
+    field_image?: string;
+    thumbnail?: string;
+    vertical_gallery_images: string[];
+    horizontal_gallery_images: string[];
+    date?: Date;
+    short_description?: string;
+    full_description?: string;
+    state?: string;
+    partner_hq?: string;
 }

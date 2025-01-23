@@ -36,7 +36,7 @@ model User {
   @@map("users")
 }
 
-model Records {
+model ContentHQ {
   id                             String        @id @default(uuid())
   title                          String
   campaign                       String?
@@ -100,7 +100,7 @@ model Records {
   created_at                     DateTime      @default(now())
   updated_at                     DateTime      @updatedAt
 
-  @@map("records")
+  @@map("content_HQ")
 }
 
 model Campaign {
@@ -133,7 +133,7 @@ model Campaign {
 
   created_by User @relation(fields: [user_id], references: [id])
 
-  @@map("campaigns")
+  @@map("campaign_HQ")
 }
 
 model File {
@@ -166,28 +166,24 @@ model OTP {
 }
 
 model Portfolio {
-  id                                  String          @id @default(uuid())
-  name                                String
-  slug                                String
-  description                         String?
-  type                                PortfolioTypes
-  model                               String?
-  days_location                       String?
-  sessions                            String?
-  producer                            String?
-  production_studio                   String?
-  location                            String?
-  talent                              String?
-  creation_10_images_services_provide String?
-  brand                               String?
-  deliverables                        String?
-  status                              PortfolioStatus
-  thumbnail                           String?
-  image_inspiration                   String?
-  video_inspiration                   String?
-  user_id                             String
-  created_at                          DateTime        @default(now())
-  updated_at                          DateTime        @updatedAt
+  id                        String    @id @default(uuid())
+  project_title             String
+  slug                      String
+  category                  String?
+  video_url                 String?
+  hero_image                String?
+  field_image               String?
+  thumbnail                 String?
+  vertical_gallery_images   String[]  @default([])
+  horizontal_gallery_images String[]  @default([])
+  date                      DateTime?
+  short_description         String?
+  full_description          String?
+  state                     String?
+  partner_hq                String?
+  user_id                   String
+  created_at                DateTime  @default(now())
+  updated_at                DateTime  @updatedAt
 
   created_by User @relation(fields: [user_id], references: [id])
 

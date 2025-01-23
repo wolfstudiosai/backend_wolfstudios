@@ -1,4 +1,4 @@
-export type TCreateRecordPayload = {
+export type TCreateContentPayload = {
   title: string;
   campaign?: string;
   product?: string;

@@ -1,11 +1,11 @@
 import { Router } from "express";
 import { AuthRoutes } from "../module/Auth/Auth.routes";
 import { CampaignRoutes } from "../module/Campaign/Campaign.routes";
+import { ContentRoutes } from "../module/ContentHQ/Content.routes";
 import { FileRoutes } from "../module/File/File.routes";
-import { RecordsRoutes } from "../module/Records/Records.routes";
-import { UserRoutes } from "../module/User/User.routes";
 import { PortfolioRoutes } from "../module/Portfolios/Portfolios.route";
 import { ThreadRoutes } from "../module/Threads/Thread.routes";
+import { UserRoutes } from "../module/User/User.routes";
 const router = Router();
 
 const routes = [
@@ -19,7 +19,7 @@ const routes = [
   },
   {
     path: "/record",
-    route: RecordsRoutes,
+    route: ContentRoutes,
   },
   {
     path: "/campaign",
@@ -34,7 +34,7 @@ const routes = [
     route: PortfolioRoutes,
   },
   {
-    path:"/threads",
+    path: "/threads",
     route: ThreadRoutes,
   },
 ];

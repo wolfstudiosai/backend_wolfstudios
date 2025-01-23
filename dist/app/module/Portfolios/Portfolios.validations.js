@@ -1,43 +1,48 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PortfolioValidations = void 0;
-const Portfolios_enum_1 = require("./Portfolios.enum"); // Assuming this imports the enum
+exports.PortfolioValidations = exports.updatePortfolioValidationSchema = exports.createPortfolioValidationSchema = void 0;
 const zod_1 = require("zod");
-// Validation schema for creating a portfolio
-const createPortfolioValidationSchema = zod_1.z.object({
-    type: zod_1.z.nativeEnum(Portfolios_enum_1.EPortfolioType),
-    name: zod_1.z.string().min(1, { message: "Name is required" }),
-    status: zod_1.z.nativeEnum(Portfolios_enum_1.EPortfolioStatus),
-    model: zod_1.z.string().optional(),
-    days_location: zod_1.z.string().optional(),
-    sessions: zod_1.z.string().optional(),
-    producer: zod_1.z.string().optional(),
-    production_studio: zod_1.z.string().optional(),
-    location: zod_1.z.string().optional(),
-    talent: zod_1.z.string().optional(),
-    creation_10_images_services_provide: zod_1.z.string().optional(),
-    brand: zod_1.z.string().optional(),
-    deliverables: zod_1.z.string().optional(),
+exports.createPortfolioValidationSchema = zod_1.z.object({
+    body: zod_1.z.object({
+        project_title: zod_1.z.string({ required_error: "Project title is required" }).min(1, "Project title is required"),
+        category: zod_1.z.string().optional(),
+        video_url: zod_1.z.string().url({ message: "Invalid video URL" }).optional(),
+        hero_image: zod_1.z.string().optional(),
+        field_image: zod_1.z.string().optional(),
+        thumbnail: zod_1.z.string().optional(),
+        vertical_gallery_images: zod_1.z.array(zod_1.z.string()).default([]),
+        horizontal_gallery_images: zod_1.z.array(zod_1.z.string()).default([]),
+        date: zod_1.z.string().optional(),
+        short_description: zod_1.z.string().optional(),
+        full_description: zod_1.z.string().optional(),
+        state: zod_1.z.string().optional(),
+        partner_hq: zod_1.z.string().optional(),
+    }).strict()
 });
-// Validation schema for updating a portfolio
-// For updating, most fields can be optional (but the id must still be provided)
-const updatePortfolioValidationSchema = zod_1.z.object({
-    type: zod_1.z.nativeEnum(Portfolios_enum_1.EPortfolioType).optional(),
-    status: zod_1.z.nativeEnum(Portfolios_enum_1.EPortfolioStatus).optional(),
-    name: zod_1.z.string().min(1, { message: "Name is required" }).optional(),
-    model: zod_1.z.string().optional(),
-    days_location: zod_1.z.string().optional(),
-    sessions: zod_1.z.string().optional(),
-    producer: zod_1.z.string().optional(),
-    production_studio: zod_1.z.string().optional(),
-    location: zod_1.z.number().optional(),
-    talent: zod_1.z.string().optional(),
-    creation_10_images_services_provide: zod_1.z.string().optional(),
-    brand: zod_1.z.string().optional(),
-    deliverables: zod_1.z.string().optional(),
+exports.updatePortfolioValidationSchema = zod_1.z.object({
+    body: zod_1.z.object({
+        project_title: zod_1.z.string().optional(),
+        category: zod_1.z.string().optional(),
+        video_url: zod_1.z.string().url({ message: "Invalid video URL" }).optional(),
+        hero_image: zod_1.z.string().optional(),
+        field_image: zod_1.z.string().optional(),
+        thumbnail: zod_1.z.string().optional(),
+        vertical_gallery_images: zod_1.z.array(zod_1.z.string()).optional(),
+        horizontal_gallery_images: zod_1.z.array(zod_1.z.string()).optional(),
+        date: zod_1.z.string().optional(),
+        short_description: zod_1.z.string().optional(),
+        full_description: zod_1.z.string().optional(),
+        state: zod_1.z.string().optional(),
+        partner_hq: zod_1.z.string().optional(),
+    }).strict()
 });
-// Exporting the validation schemas
+const deletePortfolioValidationSchema = zod_1.z.object({
+    body: zod_1.z.object({
+        ids: zod_1.z.array(zod_1.z.string({ invalid_type_error: "Id should be a text" }).regex(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/, "Invalid ID"), { message: "Array of ids is required" }).min(1, "Id is required")
+    })
+});
 exports.PortfolioValidations = {
-    createPortfolioValidationSchema,
-    updatePortfolioValidationSchema,
+    createPortfolioValidationSchema: exports.createPortfolioValidationSchema,
+    updatePortfolioValidationSchema: exports.updatePortfolioValidationSchema,
+    deletePortfolioValidationSchema
 };

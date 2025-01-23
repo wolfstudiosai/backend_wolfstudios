@@ -8,14 +8,14 @@ import pagination from "../../utils/pagination";
 import {
   dataManagementSearchableFields,
   dataManagementSortableFields,
-} from "./Records.constants";
-import { TCreateRecordPayload } from "./Records.interface";
+} from "./Content.constants";
+import { TCreateContentPayload } from "./Content.interface";
 
-const createRecord = async (payload: TCreateRecordPayload) => {
+const createContent = async (payload: TCreateContentPayload) => {
   let month_uploaded = null;
   if (payload.month_uploaded)
     month_uploaded = new Date(payload.month_uploaded as string);
-  const result = await prisma.records.create({
+  const result = await prisma.contentHQ.create({
     data: {
       ...payload,
       month_uploaded: month_uploaded,
@@ -24,7 +24,7 @@ const createRecord = async (payload: TCreateRecordPayload) => {
   return result;
 };
 
-const getRecords = async (query: Record<string, any>) => {
+const getContents = async (query: Record<string, any>) => {
   const { searchTerm, page, limit, sortBy, sortOrder, id, ...remainingQuery } =
     query;
   if (sortBy) {
@@ -41,7 +41,7 @@ const getRecords = async (query: Record<string, any>) => {
     sortOrder,
   });
 
-  const andConditions: Prisma.RecordsWhereInput[] = [];
+  const andConditions: Prisma.ContentHQWhereInput[] = [];
 
   if (id)
     andConditions.push({
@@ -73,7 +73,7 @@ const getRecords = async (query: Record<string, any>) => {
     AND: andConditions,
   };
 
-  const result = await prisma.records.findMany({
+  const result = await prisma.contentHQ.findMany({
     where: whereConditons,
     skip,
     take: limitNumber,
@@ -82,7 +82,7 @@ const getRecords = async (query: Record<string, any>) => {
     },
   });
 
-  const total = await prisma.records.count({ where: whereConditons });
+  const total = await prisma.contentHQ.count({ where: whereConditons });
 
   return {
     meta: {
@@ -94,8 +94,8 @@ const getRecords = async (query: Record<string, any>) => {
   };
 };
 
-const updateRecord = async (id: string, payload: Record<string, any>) => {
-  const result = await prisma.records.update({
+const updateContent = async (id: string, payload: Record<string, any>) => {
+  const result = await prisma.contentHQ.update({
     where: {
       id: id,
     },
@@ -104,8 +104,8 @@ const updateRecord = async (id: string, payload: Record<string, any>) => {
   return result;
 };
 
-const deleteRecords = async ({ ids }: { ids: string[] }) => {
-  const records = await prisma.records.findMany({
+const deleteContents = async ({ ids }: { ids: string[] }) => {
+  const records = await prisma.contentHQ.findMany({
     where: {
       id: {
         in: ids
@@ -117,7 +117,7 @@ const deleteRecords = async ({ ids }: { ids: string[] }) => {
     throw new ApiError(httpStatus.NOT_FOUND, "No record found to delete")
   }
 
-  const result = await prisma.records.deleteMany({
+  const result = await prisma.contentHQ.deleteMany({
     where: {
       id: {
         in: ids
@@ -130,9 +130,9 @@ const deleteRecords = async ({ ids }: { ids: string[] }) => {
   };
 };
 
-export const RecordsServices = {
-  createRecord,
-  getRecords,
-  updateRecord,
-  deleteRecords
+export const ContentServices = {
+  createContent,
+  getContents,
+  updateContent,
+  deleteContents
 };

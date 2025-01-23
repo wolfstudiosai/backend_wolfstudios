@@ -3,11 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const Auth_routes_1 = require("../module/Auth/Auth.routes");
 const Campaign_routes_1 = require("../module/Campaign/Campaign.routes");
+const Content_routes_1 = require("../module/ContentHQ/Content.routes");
 const File_routes_1 = require("../module/File/File.routes");
-const Records_routes_1 = require("../module/Records/Records.routes");
-const User_routes_1 = require("../module/User/User.routes");
 const Portfolios_route_1 = require("../module/Portfolios/Portfolios.route");
 const Thread_routes_1 = require("../module/Threads/Thread.routes");
+const User_routes_1 = require("../module/User/User.routes");
 const router = (0, express_1.Router)();
 const routes = [
     {
@@ -20,7 +20,7 @@ const routes = [
     },
     {
         path: "/record",
-        route: Records_routes_1.RecordsRoutes,
+        route: Content_routes_1.ContentRoutes,
     },
     {
         path: "/campaign",
