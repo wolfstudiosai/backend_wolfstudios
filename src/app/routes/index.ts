@@ -4,8 +4,8 @@ import { CampaignRoutes } from "../module/Campaign/Campaign.routes";
 import { ContentRoutes } from "../module/ContentHQ/Content.routes";
 import { FileRoutes } from "../module/File/File.routes";
 import { PortfolioRoutes } from "../module/Portfolios/Portfolios.route";
+import { ThreadRoutes } from "../module/Threads/Thread.routes";
 import { UserRoutes } from "../module/User/User.routes";
-
 const router = Router();
 
 const routes = [
@@ -32,7 +32,11 @@ const routes = [
   {
     path: "/portfolios",
     route: PortfolioRoutes,
-  }
+  },
+  {
+    path: "/threads",
+    route: ThreadRoutes,
+  },
 ];
 
 routes.forEach((route) => router.use(route.path, route.route));
