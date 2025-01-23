@@ -1,12 +1,14 @@
+import { Request } from "express";
+import httpStatus from "http-status";
+import { TAuthUser } from "../../interfaces/common";
 import catchAsync from "../../shared/catchAsync";
 import sendResponse from "../../shared/sendResponse";
-import httpStatus from "http-status";
-import { PortofolioService } from "./Portfolios.service";
-import { TAuthUser } from "../../interfaces/common";
-import { Request } from "express";
+import { pick } from "../../utils/pick";
+import { portfolioFilterableFields } from "./Portfolios.constant";
+import { PortfolioServices } from "./Portfolios.service";
 
-const createPortofolio = catchAsync(async (req: Request & { user?: TAuthUser }, res, next) => {
-    const result = await PortofolioService.createPortofolio(req.user as TAuthUser, req.body);
+const createPortfolio = catchAsync(async (req: Request & { user?: TAuthUser }, res, next) => {
+    const result = await PortfolioServices.createPortfolio(req.user as TAuthUser, req.body);
     sendResponse(res, {
         statusCode: httpStatus.CREATED,
         success: true,
@@ -15,29 +17,19 @@ const createPortofolio = catchAsync(async (req: Request & { user?: TAuthUser }, 
     });
 });
 
-const getPortofolios = catchAsync(async (req, res, next) => {
-    const result = await PortofolioService.getPortofolios(req.query);
-      sendResponse(res, {
-        statusCode: httpStatus.OK,
-        success: true,
-        message: "Portfolio retrieved successfully",
-        meta: result.meta,
-        data: result.data,
-      });
-});
-
-const getPortofolioById = catchAsync(async (req, res, next) => {
-    const result = await PortofolioService.getPortofolioById(req.params.id);
+const getPortfolios = catchAsync(async (req: Request & { user?: TAuthUser }, res, next) => {
+    const filteredQuery = pick(req.query, portfolioFilterableFields)
+    const result = await PortfolioServices.getPortfolios(filteredQuery);
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
-        message: "Portfolio retrieved successfully",
+        message: "Portfolios retrieved successfully",
         data: result,
     });
 });
 
-const updatePortofolio = catchAsync(async (req, res, next) => {
-    const result = await PortofolioService.updatePortofolio(req.params.id, req.body);
+const updatePortfolio = catchAsync(async (req, res, next) => {
+    const result = await PortfolioServices.updatePortfolio(req.params.id, req.body);
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
@@ -46,9 +38,8 @@ const updatePortofolio = catchAsync(async (req, res, next) => {
     });
 });
 
-const deletePortofolio = catchAsync(async (req, res, next) => {
-    const { ids } = req.body; 
-    const result = await PortofolioService.deletePortofolio(ids);
+const deletePortfolios = catchAsync(async (req, res, next) => {
+    const result = await PortfolioServices.deletePortfolios(req.body);
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
@@ -57,10 +48,9 @@ const deletePortofolio = catchAsync(async (req, res, next) => {
     });
 });
 
-export const PortfolioController = {
-    createPortofolio,
-    getPortofolios,
-    getPortofolioById,
-    updatePortofolio,
-    deletePortofolio
-};
+export const PortfolioControllers = {
+    createPortfolio,
+    getPortfolios,
+    updatePortfolio,
+    deletePortfolios
+}

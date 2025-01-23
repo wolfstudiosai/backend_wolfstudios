@@ -1,10 +1,10 @@
 import httpStatus from "http-status";
 import catchAsync from "../../shared/catchAsync";
 import sendResponse from "../../shared/sendResponse";
-import { RecordsServices } from "./Records.services";
+import { ContentServices } from "./Content.services";
 
-const createRecord = catchAsync(async (req, res, next) => {
-  const result = await RecordsServices.createRecord(req.body);
+const createContent = catchAsync(async (req, res, next) => {
+  const result = await ContentServices.createContent(req.body);
   sendResponse(res, {
     statusCode: httpStatus.CREATED,
     success: true,
@@ -13,8 +13,8 @@ const createRecord = catchAsync(async (req, res, next) => {
   });
 });
 
-const getRecords = catchAsync(async (req, res, next) => {
-  const result = await RecordsServices.getRecords(req.query);
+const getContents = catchAsync(async (req, res, next) => {
+  const result = await ContentServices.getContents(req.query);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -24,8 +24,8 @@ const getRecords = catchAsync(async (req, res, next) => {
   });
 });
 
-const updateRecord = catchAsync(async (req, res, next) => {
-  const result = await RecordsServices.updateRecord(req.params.id, req.body);
+const updateContent = catchAsync(async (req, res, next) => {
+  const result = await ContentServices.updateContent(req.params.id, req.body);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -34,8 +34,8 @@ const updateRecord = catchAsync(async (req, res, next) => {
   });
 });
 
-const deleteRecords = catchAsync(async (req, res, next) => {
-  const result = await RecordsServices.deleteRecords(req.body);
+const deleteContents = catchAsync(async (req, res, next) => {
+  const result = await ContentServices.deleteContents(req.body);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -44,9 +44,9 @@ const deleteRecords = catchAsync(async (req, res, next) => {
   });
 });
 
-export const RecordsControllers = {
-  createRecord,
-  getRecords,
-  updateRecord,
-  deleteRecords
+export const ContentControllers = {
+  createContent,
+  getContents,
+  updateContent,
+  deleteContents
 };

@@ -1,42 +1,36 @@
-import { Router } from "express";
-import validateRequest from "../../middlewares/validateRequest";
-import auth from "../../middlewares/auth";
 import { UserRole } from "@prisma/client";
-import { PortfolioController } from "./Portfolios.controller";
+import { Router } from "express";
+import auth from "../../middlewares/auth";
+import validateRequest from "../../middlewares/validateRequest";
+import { PortfolioControllers } from "./Portfolios.controller";
 import { PortfolioValidations } from "./Portfolios.validations";
 
 const router = Router();
 
 router.get(
   "/",
-  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
-  PortfolioController.getPortofolios
-);
-
-router.get(
-  "/:id",
-  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
-  PortfolioController.getPortofolioById
+  PortfolioControllers.getPortfolios
 );
 
 router.post(
   "/add-portfolio",
   auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
-  // validateRequest(PortfolioValidations.createPortfolioValidationSchema),
-  PortfolioController.createPortofolio
+  validateRequest(PortfolioValidations.createPortfolioValidationSchema),
+  PortfolioControllers.createPortfolio
 );
 
 router.patch(
   "/update-portfolio/:id",
   auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
-  // validateRequest(PortfolioValidations.updatePortfolioValidationSchema),
-  PortfolioController.updatePortofolio
+  validateRequest(PortfolioValidations.updatePortfolioValidationSchema),
+  PortfolioControllers.updatePortfolio
 );
 
 router.delete(
   "/delete-portfolio",
   auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
-  PortfolioController.deletePortofolio
+  validateRequest(PortfolioValidations.deletePortfolioValidationSchema),
+  PortfolioControllers.deletePortfolios
 );
 
 export const PortfolioRoutes = router;

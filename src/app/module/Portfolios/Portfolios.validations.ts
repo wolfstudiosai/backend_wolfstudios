@@ -1,43 +1,49 @@
-import { EPortfolioStatus, EPortfolioType } from "./Portfolios.enum"; // Assuming this imports the enum
 import { z } from "zod";
 
-// Validation schema for creating a portfolio
-const createPortfolioValidationSchema = z.object({
-  type: z.nativeEnum(EPortfolioType),
-  name: z.string().min(1, { message: "Name is required" }),
-  status: z.nativeEnum(EPortfolioStatus),
-  model: z.string().optional(),
-  days_location: z.string().optional(),
-  sessions: z.string().optional(),
-  producer: z.string().optional(),
-  production_studio: z.string().optional(),
-  location: z.string().optional(),
-  talent: z.string().optional(),
-  creation_10_images_services_provide: z.string().optional(),
-  brand: z.string().optional(),
-  deliverables: z.string().optional(),
+export const createPortfolioValidationSchema = z.object({
+  body: z.object({
+    project_title: z.string({ required_error: "Project title is required" }).min(1, "Project title is required"),
+    category: z.string().optional(),
+    video_url: z.string().url({ message: "Invalid video URL" }).optional(),
+    hero_image: z.string().optional(),
+    field_image: z.string().optional(),
+    thumbnail: z.string().optional(),
+    vertical_gallery_images: z.array(z.string()).default([]),
+    horizontal_gallery_images: z.array(z.string()).default([]),
+    date: z.string().optional(),
+    short_description: z.string().optional(),
+    full_description: z.string().optional(),
+    state: z.string().optional(),
+    partner_hq: z.string().optional(),
+  }).strict()
 });
 
-// Validation schema for updating a portfolio
-// For updating, most fields can be optional (but the id must still be provided)
-const updatePortfolioValidationSchema = z.object({
-  type: z.nativeEnum(EPortfolioType).optional(),
-  status: z.nativeEnum(EPortfolioStatus).optional(),
-  name: z.string().min(1, { message: "Name is required" }).optional(),
-  model: z.string().optional(),
-  days_location: z.string().optional(),
-  sessions: z.string().optional(),
-  producer: z.string().optional(),
-  production_studio: z.string().optional(),
-  location: z.number().optional(),
-  talent: z.string().optional(),
-  creation_10_images_services_provide: z.string().optional(),
-  brand: z.string().optional(),
-  deliverables: z.string().optional(),
+export const updatePortfolioValidationSchema = z.object({
+  body: z.object({
+    project_title: z.string().optional(),
+    category: z.string().optional(),
+    video_url: z.string().url({ message: "Invalid video URL" }).optional(),
+    hero_image: z.string().optional(),
+    field_image: z.string().optional(),
+    thumbnail: z.string().optional(),
+    vertical_gallery_images: z.array(z.string()).optional(),
+    horizontal_gallery_images: z.array(z.string()).optional(),
+    date: z.string().optional(),
+    short_description: z.string().optional(),
+    full_description: z.string().optional(),
+    state: z.string().optional(),
+    partner_hq: z.string().optional(),
+  }).strict()
 });
 
-// Exporting the validation schemas
+const deletePortfolioValidationSchema = z.object({
+  body: z.object({
+    ids: z.array(z.string({ invalid_type_error: "Id should be a text" }).regex(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/, "Invalid ID"), { message: "Array of ids is required" }).min(1, "Id is required")
+  })
+});
+
 export const PortfolioValidations = {
   createPortfolioValidationSchema,
   updatePortfolioValidationSchema,
-};
+  deletePortfolioValidationSchema
+}

@@ -1,41 +1,34 @@
 export const portfolioSortableFields = [
-    "name",
+    "project_title",
+    "category",
+    "date",
+    "short_description",
+    "full_description",
+    "state",
+    "partner_hq",
     "created_at",
-    "updated_at",
-    "status",
+    "updated_at"
 ];
 
-
 export const portfolioSearchableFields = [
-    "name",
-    "description",
-    "type",
-    "model",
-    "days_location",
-    "sessions",
-    "producer",
-    "production_studio",
-    "location",
-    "talent",
-    "creation_10_images_services_provide",
-    "brand",
-    "deliverables",
-    "image_inspiration",
-    "video_inspiration",
-    "slug",
+    "project_title",
+    "category",
+    "short_description",
+    "full_description",
+    "state",
+    "partner_hq",
 ];
 
 
 export const portfolioFilterableFields = [
-    "status",
-    "created_at",
-    "updated_at",
-    "user_id",
-    "type",
-    "slug",
-    "id",
+    "page",
+    "limit",
+    "sortBy",
+    "sortOrder",
     "searchTerm",
-    "name",
-    "location",
-    "brand",
+    "id",
+    "slug",
+    "category",
+    "state",
+    "partner_hq"
 ];

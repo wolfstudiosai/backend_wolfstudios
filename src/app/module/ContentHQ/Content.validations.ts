@@ -1,7 +1,7 @@
 import { PostingStatus } from "@prisma/client";
 import { z } from "zod";
 
-const createRecordValidationSchema = z.object({
+const createContentValidationSchema = z.object({
   body: z.object({
     title: z
       .string({
@@ -72,7 +72,7 @@ const createRecordValidationSchema = z.object({
   }),
 });
 
-const updateRecordValidationSchema = z.object({
+const updateContentValidationSchema = z.object({
   body: z.object({
     title: z
       .string({
@@ -142,14 +142,14 @@ const updateRecordValidationSchema = z.object({
   }),
 });
 
-const deleteRecordsValidationSchema = z.object({
+const deleteContentValidationSchema = z.object({
   body: z.object({
     ids: z.array(z.string({ invalid_type_error: "Id should be a text" }).regex(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/, "Invalid ID"), { message: "Array of ids is required" }).min(1, "Id is required")
   })
 });
 
-export const RecordsValidations = {
-  createRecordValidationSchema,
-  updateRecordValidationSchema,
-  deleteRecordsValidationSchema
+export const ContentValidations = {
+  createContentValidationSchema,
+  updateContentValidationSchema,
+  deleteContentValidationSchema
 };

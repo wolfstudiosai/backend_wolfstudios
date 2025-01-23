@@ -23,24 +23,27 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PortfolioServices = void 0;
+exports.ContentServices = void 0;
+const http_status_1 = __importDefault(require("http-status"));
 const common_1 = require("../../constants/common");
 const ApiError_1 = __importDefault(require("../../error/ApiError"));
 const prisma_1 = __importDefault(require("../../shared/prisma"));
 const fieldValidityChecker_1 = __importDefault(require("../../utils/fieldValidityChecker"));
 const pagination_1 = __importDefault(require("../../utils/pagination"));
-const slugGenerator_1 = require("../../utils/slugGenerator");
-const Portfolios_constant_1 = require("./Portfolios.constant");
-const createPortfolio = (user, data) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield prisma_1.default.portfolio.create({
-        data: Object.assign(Object.assign({}, data), { slug: (0, slugGenerator_1.slugGenerator)(data.project_title), user_id: user.id })
+const Content_constants_1 = require("./Content.constants");
+const createContent = (payload) => __awaiter(void 0, void 0, void 0, function* () {
+    let month_uploaded = null;
+    if (payload.month_uploaded)
+        month_uploaded = new Date(payload.month_uploaded);
+    const result = yield prisma_1.default.contentHQ.create({
+        data: Object.assign(Object.assign({}, payload), { month_uploaded: month_uploaded }),
     });
     return result;
 });
-const getPortfolios = (query) => __awaiter(void 0, void 0, void 0, function* () {
-    const { searchTerm, page, limit, sortBy, sortOrder, id, slug } = query, remainingQuery = __rest(query, ["searchTerm", "page", "limit", "sortBy", "sortOrder", "id", "slug"]);
+const getContents = (query) => __awaiter(void 0, void 0, void 0, function* () {
+    const { searchTerm, page, limit, sortBy, sortOrder, id } = query, remainingQuery = __rest(query, ["searchTerm", "page", "limit", "sortBy", "sortOrder", "id"]);
     if (sortBy) {
-        (0, fieldValidityChecker_1.default)(Portfolios_constant_1.portfolioSortableFields, sortBy);
+        (0, fieldValidityChecker_1.default)(Content_constants_1.dataManagementSortableFields, sortBy);
     }
     if (sortOrder) {
         (0, fieldValidityChecker_1.default)(common_1.sortOrderType, sortOrder);
@@ -56,13 +59,9 @@ const getPortfolios = (query) => __awaiter(void 0, void 0, void 0, function* () 
         andConditions.push({
             id: id,
         });
-    if (slug)
-        andConditions.push({
-            slug,
-        });
     if (searchTerm) {
         andConditions.push({
-            OR: Portfolios_constant_1.portfolioSearchableFields.map((field) => {
+            OR: Content_constants_1.dataManagementSearchableFields.map((field) => {
                 return {
                     [field]: {
                         contains: searchTerm,
@@ -82,7 +81,7 @@ const getPortfolios = (query) => __awaiter(void 0, void 0, void 0, function* () 
     const whereConditons = {
         AND: andConditions,
     };
-    const result = yield prisma_1.default.portfolio.findMany({
+    const result = yield prisma_1.default.contentHQ.findMany({
         where: whereConditons,
         skip,
         take: limitNumber,
@@ -90,7 +89,7 @@ const getPortfolios = (query) => __awaiter(void 0, void 0, void 0, function* () 
             [sortWith]: sortSequence,
         },
     });
-    const total = yield prisma_1.default.portfolio.count({ where: whereConditons });
+    const total = yield prisma_1.default.contentHQ.count({ where: whereConditons });
     return {
         meta: {
             page: pageNumber,
@@ -100,11 +99,8 @@ const getPortfolios = (query) => __awaiter(void 0, void 0, void 0, function* () 
         data: result,
     };
 });
-const updatePortfolio = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
-    if (payload === null || payload === void 0 ? void 0 : payload.project_title) {
-        payload.slug = (0, slugGenerator_1.slugGenerator)(payload.project_title);
-    }
-    const result = yield prisma_1.default.portfolio.update({
+const updateContent = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield prisma_1.default.contentHQ.update({
         where: {
             id: id,
         },
@@ -112,18 +108,18 @@ const updatePortfolio = (id, payload) => __awaiter(void 0, void 0, void 0, funct
     });
     return result;
 });
-const deletePortfolios = (_a) => __awaiter(void 0, [_a], void 0, function* ({ ids }) {
-    const portfolios = yield prisma_1.default.portfolio.findMany({
+const deleteContents = (_a) => __awaiter(void 0, [_a], void 0, function* ({ ids }) {
+    const records = yield prisma_1.default.contentHQ.findMany({
         where: {
             id: {
                 in: ids
             }
         }
     });
-    if (!(portfolios === null || portfolios === void 0 ? void 0 : portfolios.length)) {
-        throw new ApiError_1.default(httpStatus.NOT_FOUND, "No portfolio found to delete");
+    if (!(records === null || records === void 0 ? void 0 : records.length)) {
+        throw new ApiError_1.default(http_status_1.default.NOT_FOUND, "No record found to delete");
     }
-    const result = yield prisma_1.default.portfolio.deleteMany({
+    const result = yield prisma_1.default.contentHQ.deleteMany({
         where: {
             id: {
                 in: ids
@@ -132,12 +128,12 @@ const deletePortfolios = (_a) => __awaiter(void 0, [_a], void 0, function* ({ id
     });
     return {
         deleted_count: result.count,
-        message: `${result.count} portfolios deleted successfully`
+        message: `${result.count} records deleted successfully`
     };
 });
-exports.PortfolioServices = {
-    createPortfolio,
-    getPortfolios,
-    updatePortfolio,
-    deletePortfolios
+exports.ContentServices = {
+    createContent,
+    getContents,
+    updateContent,
+    deleteContents
 };
