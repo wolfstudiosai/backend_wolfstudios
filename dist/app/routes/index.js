@@ -7,6 +7,7 @@ const Content_routes_1 = require("../module/ContentHQ/Content.routes");
 const File_routes_1 = require("../module/File/File.routes");
 const Portfolios_route_1 = require("../module/Portfolios/Portfolios.route");
 const Thread_routes_1 = require("../module/Threads/Thread.routes");
+const User_routes_1 = require("../module/User/User.routes");
 const router = (0, express_1.Router)();
 const routes = [
     {
