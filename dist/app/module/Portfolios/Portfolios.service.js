@@ -32,6 +32,9 @@ const pagination_1 = __importDefault(require("../../utils/pagination"));
 const slugGenerator_1 = require("../../utils/slugGenerator");
 const Portfolios_constant_1 = require("./Portfolios.constant");
 const createPortfolio = (user, data) => __awaiter(void 0, void 0, void 0, function* () {
+    if (data === null || data === void 0 ? void 0 : data.date) {
+        data.date = new Date(data.date);
+    }
     const result = yield prisma_1.default.portfolio.create({
         data: Object.assign(Object.assign({}, data), { slug: (0, slugGenerator_1.slugGenerator)(data.project_title), user_id: user.id })
     });

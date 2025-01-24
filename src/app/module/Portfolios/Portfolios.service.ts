@@ -10,6 +10,9 @@ import { portfolioSearchableFields, portfolioSortableFields } from "./Portfolios
 import { ICreatePortfolio } from "./Portfolios.interface"
 
 const createPortfolio = async (user: TAuthUser, data: ICreatePortfolio) => {
+    if (data?.date) {
+        data.date = new Date(data.date)
+    }
     const result = await prisma.portfolio.create({
         data: {
             ...data,
