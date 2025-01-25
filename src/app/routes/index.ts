@@ -3,7 +3,7 @@ import { AuthRoutes } from "../module/Auth/Auth.routes";
 import { CampaignRoutes } from "../module/Campaign/Campaign.routes";
 import { ContentRoutes } from "../module/ContentHQ/Content.routes";
 import { FileRoutes } from "../module/File/File.routes";
-import { PortfolioRoutes } from "../module/Portfolios/Portfolios.route";
+import { PortfolioRoutes } from "../module/Portfolios/Portfolios.routes";
 import { ThreadRoutes } from "../module/Threads/Thread.routes";
 import { UserRoutes } from "../module/User/User.routes";
 const router = Router();
@@ -30,7 +30,7 @@ const routes = [
     route: FileRoutes,
   },
   {
-    path: "/portfolios",
+    path: "/portfolio",
     route: PortfolioRoutes,
   },
   {
