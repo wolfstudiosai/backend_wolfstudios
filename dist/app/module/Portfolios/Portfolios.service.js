@@ -32,8 +32,13 @@ const pagination_1 = __importDefault(require("../../utils/pagination"));
 const slugGenerator_1 = require("../../utils/slugGenerator");
 const Portfolios_constant_1 = require("./Portfolios.constant");
 const createPortfolio = (user, data) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    let date = null;
+    if ((_a = data === null || data === void 0 ? void 0 : data.date) === null || _a === void 0 ? void 0 : _a.length) {
+        date = new Date(data.date);
+    }
     const result = yield prisma_1.default.portfolio.create({
-        data: Object.assign(Object.assign({}, data), { slug: (0, slugGenerator_1.slugGenerator)(data.project_title), user_id: user.id })
+        data: Object.assign(Object.assign({}, data), { slug: (0, slugGenerator_1.slugGenerator)(data.project_title), user_id: user.id, date }),
     });
     return result;
 });
@@ -116,9 +121,9 @@ const deletePortfolios = (_a) => __awaiter(void 0, [_a], void 0, function* ({ id
     const portfolios = yield prisma_1.default.portfolio.findMany({
         where: {
             id: {
-                in: ids
-            }
-        }
+                in: ids,
+            },
+        },
     });
     if (!(portfolios === null || portfolios === void 0 ? void 0 : portfolios.length)) {
         throw new ApiError_1.default(httpStatus.NOT_FOUND, "No portfolio found to delete");
@@ -126,18 +131,18 @@ const deletePortfolios = (_a) => __awaiter(void 0, [_a], void 0, function* ({ id
     const result = yield prisma_1.default.portfolio.deleteMany({
         where: {
             id: {
-                in: ids
-            }
-        }
+                in: ids,
+            },
+        },
     });
     return {
         deleted_count: result.count,
-        message: `${result.count} portfolios deleted successfully`
+        message: `${result.count} portfolios deleted successfully`,
     };
 });
 exports.PortfolioServices = {
     createPortfolio,
     getPortfolios,
     updatePortfolio,
-    deletePortfolios
+    deletePortfolios,
 };
