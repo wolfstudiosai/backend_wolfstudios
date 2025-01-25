@@ -22,7 +22,7 @@ export const updatePortfolioValidationSchema = z.object({
   body: z.object({
     project_title: z.string().optional(),
     category: z.string().optional(),
-    video_url: z.string().url({ message: "Invalid video URL" }).optional(),
+    video_url: z.string().optional().nullable(),
     hero_image: z.string().optional(),
     field_image: z.string().optional(),
     thumbnail: z.string().optional(),
