@@ -29,7 +29,7 @@ exports.updatePortfolioValidationSchema = zod_1.z.object({
         thumbnail: zod_1.z.string().optional(),
         vertical_gallery_images: zod_1.z.array(zod_1.z.string()).optional(),
         horizontal_gallery_images: zod_1.z.array(zod_1.z.string()).optional(),
-        date: zod_1.z.string().optional(),
+        date: zod_1.z.string().optional().nullable(),
         short_description: zod_1.z.string().optional(),
         full_description: zod_1.z.string().optional(),
         state: zod_1.z.string().optional(),

@@ -28,7 +28,7 @@ export const updatePortfolioValidationSchema = z.object({
     thumbnail: z.string().optional(),
     vertical_gallery_images: z.array(z.string()).optional(),
     horizontal_gallery_images: z.array(z.string()).optional(),
-    date: z.string().optional(),
+    date: z.string().optional().nullable(),
     short_description: z.string().optional(),
     full_description: z.string().optional(),
     state: z.string().optional(),
