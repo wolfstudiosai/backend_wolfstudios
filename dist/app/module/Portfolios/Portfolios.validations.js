@@ -6,7 +6,7 @@ exports.createPortfolioValidationSchema = zod_1.z.object({
     body: zod_1.z.object({
         project_title: zod_1.z.string({ required_error: "Project title is required" }).min(1, "Project title is required"),
         category: zod_1.z.string().optional(),
-        video_url: zod_1.z.string().url({ message: "Invalid video URL" }).optional(),
+        video_url: zod_1.z.string().optional(),
         hero_image: zod_1.z.string().optional(),
         field_image: zod_1.z.string().optional(),
         thumbnail: zod_1.z.string().optional(),

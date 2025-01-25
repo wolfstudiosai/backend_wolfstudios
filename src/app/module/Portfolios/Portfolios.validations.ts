@@ -4,7 +4,7 @@ export const createPortfolioValidationSchema = z.object({
   body: z.object({
     project_title: z.string({ required_error: "Project title is required" }).min(1, "Project title is required"),
     category: z.string().optional(),
-    video_url: z.string().url({ message: "Invalid video URL" }).optional(),
+    video_url: z.string().optional(),
     hero_image: z.string().optional(),
     field_image: z.string().optional(),
     thumbnail: z.string().optional(),
