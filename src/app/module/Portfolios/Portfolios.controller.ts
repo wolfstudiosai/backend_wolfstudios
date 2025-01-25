@@ -24,7 +24,8 @@ const getPortfolios = catchAsync(async (req: Request & { user?: TAuthUser }, res
         statusCode: httpStatus.OK,
         success: true,
         message: "Portfolios retrieved successfully",
-        data: result,
+        meta: result.meta,
+        data: result.data,
     });
 });
 
