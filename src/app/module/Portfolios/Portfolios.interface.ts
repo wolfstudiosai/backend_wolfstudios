@@ -7,7 +7,7 @@ export interface ICreatePortfolio {
     thumbnail?: string;
     vertical_gallery_images: string[];
     horizontal_gallery_images: string[];
-    date?: Date;
+    date?: string;
     short_description?: string;
     full_description?: string;
     state?: string;

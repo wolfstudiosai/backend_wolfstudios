@@ -15,14 +15,17 @@ const app = (0, express_1.default)();
 // middlewares configuration
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
-app.use((0, cors_1.default)({
-    origin: [
-        "https://wolf-studios-frontend.vercel.app",
-        "https://wolf-studios-backend-theta.vercel.app",
-        "http://localhost:3000",
-    ],
-    credentials: true,
-}));
+// app.use(
+//   cors({
+//     origin: [
+//       "https://wolf-studios-frontend.vercel.app",
+//       "https://wolf-studios-backend-theta.vercel.app",
+//       "http://localhost:3000",
+//     ],
+//     credentials: true,
+//   })
+// );
+app.use((0, cors_1.default)({ origin: "*" }));
 // test server
 app.get("/", (req, res) => {
     res.status(http_status_1.default.OK).json({

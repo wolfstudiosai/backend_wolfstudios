@@ -265,5 +265,6 @@ export const getUserThreads = async (
     })),
     unreadCount: thread.unread_count || 0,
     name: thread.name || null,
+    member_count: thread.member_count || 0,
   }));
 };

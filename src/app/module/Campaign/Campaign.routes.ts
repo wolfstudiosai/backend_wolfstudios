@@ -7,30 +7,27 @@ import { CampaignValidations } from "./Campaign.validations";
 
 const router = Router();
 
-router.get(
-    "/",
-    CampaignControllers.getCampaigns
-);
+router.get("/", CampaignControllers.getCampaigns);
 
 router.post(
-    "/add-campaign",
-    auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
-    validateRequest(CampaignValidations.createCampaignValidationSchema),
-    CampaignControllers.createCampaign
-);
-
-router.delete(
-    "/delete",
-    auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
-    validateRequest(CampaignValidations.deleteCampaignValidationSchema),
-    CampaignControllers.deleteCampaigns
+  "/add-campaign",
+  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
+  validateRequest(CampaignValidations.createCampaignValidationSchema),
+  CampaignControllers.createCampaign
 );
 
 router.patch(
-    "/update/:id",
-    auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
-    validateRequest(CampaignValidations.updateCampaignValidationSchema),
-    CampaignControllers.updateCampaign
+  "/update/:id",
+  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
+  validateRequest(CampaignValidations.updateCampaignValidationSchema),
+  CampaignControllers.updateCampaign
+);
+
+router.delete(
+  "/delete",
+  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
+  validateRequest(CampaignValidations.deleteCampaignValidationSchema),
+  CampaignControllers.deleteCampaigns
 );
 
 export const CampaignRoutes = router;

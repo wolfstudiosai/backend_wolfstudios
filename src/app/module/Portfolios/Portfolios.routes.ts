@@ -7,10 +7,7 @@ import { PortfolioValidations } from "./Portfolios.validations";
 
 const router = Router();
 
-router.get(
-  "/",
-  PortfolioControllers.getPortfolios
-);
+router.get("/", PortfolioControllers.getPortfolios);
 
 router.post(
   "/add-portfolio",
@@ -20,14 +17,14 @@ router.post(
 );
 
 router.patch(
-  "/update-portfolio/:id",
+  "/update/:id",
   auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
   validateRequest(PortfolioValidations.updatePortfolioValidationSchema),
   PortfolioControllers.updatePortfolio
 );
 
 router.delete(
-  "/delete-portfolio",
+  "/delete",
   auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
   validateRequest(PortfolioValidations.deletePortfolioValidationSchema),
   PortfolioControllers.deletePortfolios

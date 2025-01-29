@@ -12,16 +12,18 @@ const app: Application = express();
 // middlewares configuration
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(
-  cors({
-    origin: [
-      "https://wolf-studios-frontend.vercel.app",
-      "https://wolf-studios-backend-theta.vercel.app",
-      "http://localhost:3000",
-    ],
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin: [
+//       "https://wolf-studios-frontend.vercel.app",
+//       "https://wolf-studios-backend-theta.vercel.app",
+//       "http://localhost:3000",
+//     ],
+//     credentials: true,
+//   })
+// );
+
+app.use(cors({ origin: "*" }));
 
 // test server
 app.get("/", (req, res) => {

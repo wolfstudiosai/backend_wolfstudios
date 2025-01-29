@@ -235,6 +235,7 @@ const getUserThreads = (userId, onNewThread) => __awaiter(void 0, void 0, void 0
         })),
         unreadCount: thread.unread_count || 0,
         name: thread.name || null,
+        member_count: thread.member_count || 0,
     }));
 });
 exports.getUserThreads = getUserThreads;

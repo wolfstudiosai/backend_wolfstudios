@@ -35,7 +35,8 @@ const getPortfolios = (0, catchAsync_1.default)((req, res, next) => __awaiter(vo
         statusCode: http_status_1.default.OK,
         success: true,
         message: "Portfolios retrieved successfully",
-        data: result,
+        meta: result.meta,
+        data: result.data,
     });
 }));
 const updatePortfolio = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
