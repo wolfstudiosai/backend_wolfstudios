@@ -231,11 +231,14 @@ const getUserThreads = (userId, onNewThread) => __awaiter(void 0, void 0, void 0
     return threads.map((thread) => ({
         id: thread.id,
         type: thread.type || '',
-        participants: thread.participants.map((participant) => ({
-            id: participant.user_id,
-            name: `${participant.user.first_name} ${participant.user.last_name}`,
-            avatar: (participant === null || participant === void 0 ? void 0 : participant.user.profile_pic) || '',
-        })),
+        participants: thread.participants.map((participant) => {
+            var _a, _b;
+            return ({
+                id: participant.user_id,
+                name: `${(_a = participant.user) === null || _a === void 0 ? void 0 : _a.first_name} ${(_b = participant.user) === null || _b === void 0 ? void 0 : _b.last_name}`,
+                avatar: (participant === null || participant === void 0 ? void 0 : participant.user.profile_pic) || '',
+            });
+        }),
         unreadCount: thread.unread_count || 0,
         name: thread.name || '',
         member_count: thread.member_count || 0,

@@ -261,7 +261,7 @@ export const getUserThreads = async (
     type: thread.type || '',
     participants: thread.participants.map((participant) => ({
       id: participant.user_id,
-      name: `${participant.user.first_name} ${participant.user.last_name}`,
+      name: `${participant.user?.first_name} ${participant.user?.last_name}`,
       avatar: participant?.user.profile_pic || '',
     })),
     unreadCount: thread.unread_count || 0,
