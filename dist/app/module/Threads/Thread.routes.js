@@ -51,4 +51,5 @@ router.delete('/message/delete', ThreadController.deleteMessage);
 router.post('/message/reply', ThreadController.replyToMessage);
 router.post('/thread/mark-as-read', ThreadController.markAsRead);
 router.post('/message/comment', ThreadController.commentOnMessage);
+router.get('/contacts', ThreadController.getContacts);
 exports.ThreadRoutes = router;
