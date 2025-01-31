@@ -39,6 +39,7 @@ exports.updatePortfolioValidationSchema = zod_1.z.object({
         full_description: zod_1.z.string().optional().nullable(),
         state: zod_1.z.string().optional().nullable(),
         partner_hq: zod_1.z.string().optional().nullable(),
+        featured: zod_1.z.boolean().optional(),
     })
         .strict(),
 });
