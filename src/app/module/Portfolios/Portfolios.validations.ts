@@ -38,6 +38,7 @@ export const updatePortfolioValidationSchema = z.object({
       full_description: z.string().optional().nullable(),
       state: z.string().optional().nullable(),
       partner_hq: z.string().optional().nullable(),
+      featured: z.boolean().optional(),
     })
     .strict(),
 });
