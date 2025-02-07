@@ -80,6 +80,38 @@ const filesUpload = async (req: Request & { user?: TAuthUser }) => {
 
 }
 
+const deleteFiles = async (payload: { paths: string[] }) => {
+    const { paths } = payload;
+    const updatedPaths = paths.map((path) => path.replace("/general/", ""));
+
+    const { data, error } = await supabase.storage
+        .from('general')
+        .remove(updatedPaths);
+
+
+    if ((error as any)?.status === 400 || data?.length === 0)
+        throw new ApiError(
+            httpStatus.BAD_REQUEST,
+            "No valid file path found to delete"
+        );
+
+    const deletedFilesBucketId = data?.map((file) => file.id);
+
+    const result = await prisma.file.deleteMany({
+        where: {
+            bucket_id: {
+                in: deletedFilesBucketId,
+            },
+        },
+    });
+
+    return {
+        deleted_count: result.count,
+        message: `${result.count} files has been deleted`,
+    };
+};
+
 export const FileServices = {
-    filesUpload
+    filesUpload,
+    deleteFiles
 }
