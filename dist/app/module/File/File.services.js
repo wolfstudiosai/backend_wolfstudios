@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FileServices = void 0;
+const http_status_1 = __importDefault(require("http-status"));
 const sharp_1 = __importDefault(require("sharp"));
 const config_1 = __importDefault(require("../../config"));
 const ApiError_1 = __importDefault(require("../../error/ApiError"));
@@ -24,7 +25,7 @@ const filesUpload = (req) => __awaiter(void 0, void 0, void 0, function* () {
     const files = req.files;
     const user = req.user;
     if (!((_a = files === null || files === void 0 ? void 0 : files.files) === null || _a === void 0 ? void 0 : _a.length)) {
-        throw new ApiError_1.default(httpStatus.BAD_REQUEST, "No file found");
+        throw new ApiError_1.default(http_status_1.default.BAD_REQUEST, "No file found");
     }
     const prepared_files = [];
     if (files === null || files === void 0 ? void 0 : files.files) {
@@ -64,13 +65,13 @@ const filesUpload = (req) => __awaiter(void 0, void 0, void 0, function* () {
         const files = yield prisma_1.default.file.findMany({
             where: {
                 path: {
-                    in: uploaded_files
-                }
+                    in: uploaded_files,
+                },
             },
             select: {
                 name: true,
-                path: true
-            }
+                path: true,
+            },
         });
         return files;
     }));
@@ -80,10 +81,10 @@ const deleteFiles = (payload) => __awaiter(void 0, void 0, void 0, function* () 
     const { paths } = payload;
     const updatedPaths = paths.map((path) => path.replace("/general/", ""));
     const { data, error } = yield supabase_1.default.storage
-        .from('general')
+        .from("general")
         .remove(updatedPaths);
     if ((error === null || error === void 0 ? void 0 : error.status) === 400 || (data === null || data === void 0 ? void 0 : data.length) === 0)
-        throw new ApiError_1.default(httpStatus.BAD_REQUEST, "No valid file path found to delete");
+        throw new ApiError_1.default(http_status_1.default.BAD_REQUEST, "No valid file path found to delete");
     const deletedFilesBucketId = data === null || data === void 0 ? void 0 : data.map((file) => file.id);
     const result = yield prisma_1.default.file.deleteMany({
         where: {
@@ -99,5 +100,5 @@ const deleteFiles = (payload) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.FileServices = {
     filesUpload,
-    deleteFiles
+    deleteFiles,
 };
