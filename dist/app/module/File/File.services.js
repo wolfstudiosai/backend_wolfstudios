@@ -76,6 +76,28 @@ const filesUpload = (req) => __awaiter(void 0, void 0, void 0, function* () {
     }));
     return result;
 });
+const deleteFiles = (payload) => __awaiter(void 0, void 0, void 0, function* () {
+    const { paths } = payload;
+    const updatedPaths = paths.map((path) => path.replace("/general/", ""));
+    const { data, error } = yield supabase_1.default.storage
+        .from('general')
+        .remove(updatedPaths);
+    if ((error === null || error === void 0 ? void 0 : error.status) === 400 || (data === null || data === void 0 ? void 0 : data.length) === 0)
+        throw new ApiError_1.default(httpStatus.BAD_REQUEST, "No valid file path found to delete");
+    const deletedFilesBucketId = data === null || data === void 0 ? void 0 : data.map((file) => file.id);
+    const result = yield prisma_1.default.file.deleteMany({
+        where: {
+            bucket_id: {
+                in: deletedFilesBucketId,
+            },
+        },
+    });
+    return {
+        deleted_count: result.count,
+        message: `${result.count} files has been deleted`,
+    };
+});
 exports.FileServices = {
-    filesUpload
+    filesUpload,
+    deleteFiles
 };
