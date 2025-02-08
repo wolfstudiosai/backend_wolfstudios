@@ -14,5 +14,4 @@ const FileValidations_1 = require("./FileValidations");
 const router = (0, express_1.Router)();
 router.post("/upload", (0, auth_1.default)(client_1.UserRole.SUPER_ADMIN, client_1.UserRole.ADMIN, client_1.UserRole.USER), fileUploader_1.fileUploader.multipleUpload, File_controllers_1.FileControllers.filesUpload);
 router.delete("/delete-files", (0, auth_1.default)(client_1.UserRole.SUPER_ADMIN, client_1.UserRole.ADMIN, client_1.UserRole.USER), (0, validateRequest_1.default)(FileValidations_1.FileValidations.deleteFilesValidationSchema), File_controllers_1.FileControllers.deleteFiles);
-// test comment
 exports.FileRoutes = router;
