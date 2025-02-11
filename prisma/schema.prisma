@@ -27,7 +27,7 @@ model User {
   password_changed_at DateTime            @default(now())
   created_at          DateTime            @default(now())
   updated_at          DateTime            @updatedAt
-  Campaign            Campaign[]
+  Campaign            CampaignOld[]
   File                File[]
   Portfolio           Portfolio[]
   ThreadParticipant   ThreadParticipant[]
@@ -107,14 +107,45 @@ model Campaign {
   id                   String         @id @default(uuid())
   name                 String
   slug                 String
+  guideline            String?
+  campaign_image       String?
+  content_engagement   Int            @default(0)
+  content_hq           String?
+  note                 String?
+  stakeholder          String?
+  campaign_status      CampaignStatus @default(UPCOMING)
+  retail_partners      String?
+  proposed_partners    String?
+  live_partners        String?
+  contributed_partners String?
+  image_gallery        String[]       @default([])
+  video_gallery        String[]       @default([])
+  budget               Int?
+  total_expense        Int?
+  campaign_ROI         String?
+  start_date           DateTime?
+  end_date             DateTime?
+  description          String?
+  spaces               String?
+  product_expense      Int?
+  created_at           DateTime       @default(now())
+  updated_at           DateTime       @updatedAt
+
+  @@map("campaigns")
+}
+
+model CampaignOld {
+  id                   String            @id @default(uuid())
+  name                 String
+  slug                 String
   description          String?
   start_date           DateTime?
   end_date             DateTime?
-  status               CampaignStatus
+  status               CampaignStatusOld
   thumbnail            String?
   stakeholder          String?
   goal                 String?
-  partner_compensation Int            @default(0)
+  partner_compensation Int               @default(0)
   partner_deliverables String?
   contributed_partners String?
   prospected_partners  String?
@@ -122,14 +153,14 @@ model Campaign {
   content_guidelines   String?
   image_inspiration    String?
   video_inspiration    String?
-  content_engagement   Int            @default(0)
-  product_expense      Int            @default(0)
-  partner_expense      Int            @default(0)
+  content_engagement   Int               @default(0)
+  product_expense      Int               @default(0)
+  partner_expense      Int               @default(0)
   social_platforms     Json?
-  featured             Boolean        @default(false)
+  featured             Boolean           @default(false)
   user_id              String
-  created_at           DateTime       @default(now())
-  updated_at           DateTime       @updatedAt
+  created_at           DateTime          @default(now())
+  updated_at           DateTime          @updatedAt
 
   created_by User @relation(fields: [user_id], references: [id])
 
@@ -264,11 +295,20 @@ enum PostingStatus {
   NOT_POSTED
 }
 
-enum CampaignStatus {
+enum CampaignStatusOld {
   PENDING
   APPROVED
   REJECTED
   COMPLETED
+}
+
+enum CampaignStatus {
+  UPCOMING
+  ACTIVE
+  PAUSED
+  NEEDS_CASE_STUDY
+  NEEDS_PARTNERS
+  ONBOARDING_PARTNERS
 }
 
 enum PortfolioTypes {

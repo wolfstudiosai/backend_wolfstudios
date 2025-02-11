@@ -11,7 +11,7 @@ router.get("/", CampaignControllers.getCampaigns);
 
 router.post(
   "/add-campaign",
-  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
+  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.USER),
   validateRequest(CampaignValidations.createCampaignValidationSchema),
   CampaignControllers.createCampaign
 );

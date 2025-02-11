@@ -20,7 +20,7 @@ const pick_1 = require("../../utils/pick");
 const Campaign_constants_1 = require("./Campaign.constants");
 const Campaign_services_1 = require("./Campaign.services");
 const createCampaign = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield Campaign_services_1.CampaignServices.createCampaign(req.user, req.body);
+    const result = yield Campaign_services_1.CampaignServices.createCampaign(req.body);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.CREATED,
         success: true,
