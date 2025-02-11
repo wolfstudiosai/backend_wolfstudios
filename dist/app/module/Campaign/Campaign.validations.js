@@ -36,6 +36,9 @@ const createCampaignValidationSchema = zod_1.z.object({
 const updateCampaignValidationSchema = zod_1.z.object({
     body: zod_1.z.object({
         name: zod_1.z.string().nullable().optional(),
+        campaign_group_id: zod_1.z
+            .string({ invalid_type_error: "Campaign group id should be a text", required_error: "Campaign group id is required" })
+            .regex(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/, "Invalid ID"),
         guideline: zod_1.z.string().nullable().optional(),
         campaign_image: zod_1.z.string().nullable().optional(),
         content_engagement: zod_1.z.number().nullable().optional(),
