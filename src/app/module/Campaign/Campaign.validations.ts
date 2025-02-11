@@ -4,6 +4,12 @@ import { z } from "zod";
 const createCampaignValidationSchema = z.object({
   body: z.object({
     name: z.string({ required_error: "Name is required" }),
+    campaign_group_id: z
+      .string({ invalid_type_error: "Campaign group id should be a text", required_error: "Campaign group id is required" })
+      .regex(
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/,
+        "Invalid ID"
+      ),
     guideline: z.string().optional(),
     campaign_image: z.string().optional(),
     content_engagement: z.number().default(0),

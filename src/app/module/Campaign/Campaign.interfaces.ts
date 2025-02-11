@@ -23,4 +23,5 @@ export interface ICampaign {
     description?: string;
     spaces?: string;
     product_expense?: number;
+    campaign_group_id: string;
 }

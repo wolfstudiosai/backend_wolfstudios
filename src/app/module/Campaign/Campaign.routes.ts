@@ -18,14 +18,14 @@ router.post(
 
 router.patch(
   "/update/:id",
-  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
+  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.USER),
   validateRequest(CampaignValidations.updateCampaignValidationSchema),
   CampaignControllers.updateCampaign
 );
 
 router.delete(
   "/delete",
-  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
+  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.USER),
   validateRequest(CampaignValidations.deleteCampaignValidationSchema),
   CampaignControllers.deleteCampaigns
 );

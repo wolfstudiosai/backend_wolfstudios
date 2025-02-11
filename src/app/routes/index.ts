@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { AuthRoutes } from "../module/Auth/Auth.routes";
 import { CampaignRoutes } from "../module/Campaign/Campaign.routes";
+import { CampaignGroupRoutes } from "../module/Campaign_Group/campaign_group.routes";
 import { ContentRoutes } from "../module/ContentHQ/Content.routes";
 import { FileRoutes } from "../module/File/File.routes";
 import { PortfolioRoutes } from "../module/Portfolios/Portfolios.routes";
@@ -24,6 +25,10 @@ const routes = [
   {
     path: "/campaign",
     route: CampaignRoutes,
+  },
+  {
+    path: "/campaign-group",
+    route: CampaignGroupRoutes,
   },
   // {
   //   path: "/old_campaign",

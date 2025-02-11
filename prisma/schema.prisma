@@ -103,10 +103,23 @@ model ContentHQ {
   @@map("content_HQ")
 }
 
+model CampaignGroup {
+  id          String     @id @default(uuid())
+  name        String
+  slug        String
+  description String?
+  created_at  DateTime   @default(now())
+  updated_at  DateTime   @updatedAt
+  campaigns   Campaign[]
+
+  @@map("campaign_groups")
+}
+
 model Campaign {
   id                   String         @id @default(uuid())
   name                 String
   slug                 String
+  campaign_group_id    String
   guideline            String?
   campaign_image       String?
   content_engagement   Int            @default(0)
@@ -130,6 +143,8 @@ model Campaign {
   product_expense      Int?
   created_at           DateTime       @default(now())
   updated_at           DateTime       @updatedAt
+
+  campaign_group CampaignGroup @relation(fields: [campaign_group_id], references: [id])
 
   @@map("campaigns")
 }
