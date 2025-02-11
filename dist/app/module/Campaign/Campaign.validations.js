@@ -4,91 +4,56 @@ exports.CampaignValidations = void 0;
 const client_1 = require("@prisma/client");
 const zod_1 = require("zod");
 const createCampaignValidationSchema = zod_1.z.object({
-    body: zod_1.z
-        .object({
-        name: zod_1.z.string().min(1, "Name is required"),
+    body: zod_1.z.object({
+        name: zod_1.z.string({ required_error: "Name is required" }),
+        guideline: zod_1.z.string().optional(),
+        campaign_image: zod_1.z.string().optional(),
+        content_engagement: zod_1.z.number().default(0),
+        content_hq: zod_1.z.string().optional(),
+        note: zod_1.z.string().optional(),
         stakeholder: zod_1.z.string().optional(),
-        status: zod_1.z
-            .enum(Object.values(client_1.CampaignStatus))
-            .default(client_1.CampaignStatus.PENDING),
-        thumbnail: zod_1.z.string().optional(),
-        start_date: zod_1.z.string().nullable().optional(),
-        end_date: zod_1.z.string().nullable().optional(),
-        description: zod_1.z.string().optional(),
-        goal: zod_1.z.string().optional(),
-        partner_compensation: zod_1.z
-            .number()
-            .min(0, "Partner compensation must be a positive number")
-            .default(0),
-        partner_deliverables: zod_1.z.string().optional(),
+        campaign_status: zod_1.z.nativeEnum(client_1.CampaignStatus).optional(),
+        retail_partners: zod_1.z.string().optional(),
+        proposed_partners: zod_1.z.string().optional(),
+        live_partners: zod_1.z.string().optional(),
         contributed_partners: zod_1.z.string().optional(),
-        prospected_partners: zod_1.z.string().optional(),
-        content_HQ: zod_1.z.string().optional(),
-        content_guidelines: zod_1.z.string().optional(),
-        image_inspiration: zod_1.z.string().optional(),
-        video_inspiration: zod_1.z.string().optional(),
-        content_engagement: zod_1.z
-            .number()
-            .min(0, "Content engagement must be a positive number")
-            .default(0),
-        product_expense: zod_1.z
-            .number()
-            .min(0, "Product expense must be a positive number")
-            .default(0),
-        partner_expense: zod_1.z
-            .number()
-            .min(0, "Partner expense must be a positive number")
-            .default(0),
-        social_platforms: zod_1.z.array(zod_1.z.object({
-            platform: zod_1.z.string(),
-            url: zod_1.z.string(),
-        })),
+        image_gallery: zod_1.z.array(zod_1.z.string()).optional(),
+        video_gallery: zod_1.z.array(zod_1.z.string()).optional(),
+        budget: zod_1.z.number().optional(),
+        total_expense: zod_1.z.number().optional(),
+        campaign_ROI: zod_1.z.string().optional(),
+        start_date: zod_1.z.string().optional(),
+        end_date: zod_1.z.string().optional(),
+        description: zod_1.z.string().optional(),
+        spaces: zod_1.z.string().optional(),
+        product_expense: zod_1.z.number().optional(),
     })
         .strict(),
 });
 const updateCampaignValidationSchema = zod_1.z.object({
-    body: zod_1.z
-        .object({
-        name: zod_1.z.string().min(1, "Name is required").optional(),
+    body: zod_1.z.object({
+        name: zod_1.z.string().optional(),
+        guideline: zod_1.z.string().optional(),
+        campaign_image: zod_1.z.string().optional(),
+        content_engagement: zod_1.z.number().optional(),
+        content_hq: zod_1.z.string().optional(),
+        note: zod_1.z.string().optional(),
         stakeholder: zod_1.z.string().optional(),
-        status: zod_1.z
-            .enum(Object.values(client_1.CampaignStatus))
-            .optional(),
-        thumbnail: zod_1.z.string().optional(),
-        start_date: zod_1.z.string().nullable().optional(),
-        end_date: zod_1.z.string().nullable().optional(),
-        description: zod_1.z.string().optional(),
-        goal: zod_1.z.string().optional(),
-        partner_compensation: zod_1.z
-            .number()
-            .min(0, "Partner compensation must be a positive number")
-            .optional(),
-        partner_deliverables: zod_1.z.string().optional(),
+        campaign_status: zod_1.z.nativeEnum(client_1.CampaignStatus).optional(),
+        retail_partners: zod_1.z.string().optional(),
+        proposed_partners: zod_1.z.string().optional(),
+        live_partners: zod_1.z.string().optional(),
         contributed_partners: zod_1.z.string().optional(),
-        prospected_partners: zod_1.z.string().optional(),
-        content_HQ: zod_1.z.string().optional(),
-        content_guidelines: zod_1.z.string().optional(),
-        image_inspiration: zod_1.z.string().optional(),
-        video_inspiration: zod_1.z.string().optional(),
-        content_engagement: zod_1.z
-            .number()
-            .min(0, "Content engagement must be a positive number")
-            .optional(),
-        product_expense: zod_1.z
-            .number()
-            .min(0, "Product expense must be a positive number")
-            .optional(),
-        partner_expense: zod_1.z
-            .number()
-            .min(0, "Partner expense must be a positive number")
-            .optional(),
-        social_platforms: zod_1.z
-            .array(zod_1.z.object({
-            platform: zod_1.z.string(),
-            url: zod_1.z.string(),
-        }))
-            .optional(),
-        featured: zod_1.z.boolean().optional(),
+        image_gallery: zod_1.z.array(zod_1.z.string()).optional(),
+        video_gallery: zod_1.z.array(zod_1.z.string()).optional(),
+        budget: zod_1.z.number().optional(),
+        total_expense: zod_1.z.number().optional(),
+        campaign_ROI: zod_1.z.string().optional(),
+        start_date: zod_1.z.string().optional(),
+        end_date: zod_1.z.string().optional(),
+        description: zod_1.z.string().optional(),
+        spaces: zod_1.z.string().optional(),
+        product_expense: zod_1.z.number().optional(),
     })
         .strict(),
 });

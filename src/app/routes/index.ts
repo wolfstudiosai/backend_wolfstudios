@@ -25,6 +25,10 @@ const routes = [
     path: "/campaign",
     route: CampaignRoutes,
   },
+  // {
+  //   path: "/old_campaign",
+  //   route: OldCampaignRoutes,
+  // },
   {
     path: "/file",
     route: FileRoutes,

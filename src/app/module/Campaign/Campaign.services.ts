@@ -2,16 +2,15 @@ import { Prisma } from "@prisma/client";
 import httpStatus from "http-status";
 import { sortOrderType } from "../../constants/common";
 import ApiError from "../../error/ApiError";
-import { TAuthUser } from "../../interfaces/common";
 import prisma from "../../shared/prisma";
 import fieldValidityChecker from "../../utils/fieldValidityChecker";
 import pagination from "../../utils/pagination";
 import { slugGenerator } from "../../utils/slugGenerator";
 import { campaignSearchableFields, campaignSortableFields } from "./Campaign.constants";
-import { TCreateCampaignPayload } from "./Campaign.interfaces";
+import { ICampaign } from "./Campaign.interfaces";
 
-const createCampaign = async (user: TAuthUser, payload: TCreateCampaignPayload) => {
-    const { start_date, end_date, ...rest } = payload;
+const createCampaign = async (data: ICampaign) => {
+    const { start_date, end_date, ...rest } = data;
 
     let startDate = null;
     let endDate = null;
@@ -24,14 +23,15 @@ const createCampaign = async (user: TAuthUser, payload: TCreateCampaignPayload) 
 
     const result = await prisma.campaign.create({
         data: {
-            ...rest,
+            ...data,
+            slug: slugGenerator(data.name),
             start_date: startDate,
             end_date: endDate,
-            user_id: user.id,
-            slug: slugGenerator(payload.name),
         }
     })
-    return result
+
+
+    return result;
 }
 
 const getCampaigns = async (query: Record<string, any>) => {
@@ -90,18 +90,6 @@ const getCampaigns = async (query: Record<string, any>) => {
         orderBy: {
             [sortWith]: sortSequence,
         },
-        include: {
-            created_by: {
-                select: {
-                    first_name: true,
-                    last_name: true,
-                    email: true,
-                    contact_number: true,
-                    profile_pic: true,
-                    role: true
-                }
-            }
-        }
     });
 
     const total = await prisma.campaign.count({ where: whereConditons });

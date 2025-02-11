@@ -32,8 +32,8 @@ const fieldValidityChecker_1 = __importDefault(require("../../utils/fieldValidit
 const pagination_1 = __importDefault(require("../../utils/pagination"));
 const slugGenerator_1 = require("../../utils/slugGenerator");
 const Campaign_constants_1 = require("./Campaign.constants");
-const createCampaign = (user, payload) => __awaiter(void 0, void 0, void 0, function* () {
-    const { start_date, end_date } = payload, rest = __rest(payload, ["start_date", "end_date"]);
+const createCampaign = (data) => __awaiter(void 0, void 0, void 0, function* () {
+    const { start_date, end_date } = data, rest = __rest(data, ["start_date", "end_date"]);
     let startDate = null;
     let endDate = null;
     if (start_date) {
@@ -43,7 +43,7 @@ const createCampaign = (user, payload) => __awaiter(void 0, void 0, void 0, func
         endDate = new Date(end_date);
     }
     const result = yield prisma_1.default.campaign.create({
-        data: Object.assign(Object.assign({}, rest), { start_date: startDate, end_date: endDate, user_id: user.id, slug: (0, slugGenerator_1.slugGenerator)(payload.name) })
+        data: Object.assign(Object.assign({}, data), { slug: (0, slugGenerator_1.slugGenerator)(data.name), start_date: startDate, end_date: endDate })
     });
     return result;
 });
@@ -95,18 +95,6 @@ const getCampaigns = (query) => __awaiter(void 0, void 0, void 0, function* () {
         orderBy: {
             [sortWith]: sortSequence,
         },
-        include: {
-            created_by: {
-                select: {
-                    first_name: true,
-                    last_name: true,
-                    email: true,
-                    contact_number: true,
-                    profile_pic: true,
-                    role: true
-                }
-            }
-        }
     });
     const total = yield prisma_1.default.campaign.count({ where: whereConditons });
     return {
