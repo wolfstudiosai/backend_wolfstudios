@@ -27,6 +27,10 @@ const routes = [
         path: "/campaign",
         route: Campaign_routes_1.CampaignRoutes,
     },
+    // {
+    //   path: "/old_campaign",
+    //   route: OldCampaignRoutes,
+    // },
     {
         path: "/campaign-group",
         route: campaign_group_routes_1.CampaignGroupRoutes,
