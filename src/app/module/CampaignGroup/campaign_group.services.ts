@@ -112,10 +112,10 @@ const getCampaignGroups = async (query: Record<string, any>) => {
 
   const formattedResult = result.map((group) => ({
     ...group,
-    campaigns: group.campaigns.map((campaign) => ({
+    campaigns: group.campaigns.map(({ campaign_group, ...campaign }) => ({
       ...campaign,
-      campaign_group_id: campaign.campaign_group?.id,
-      campaign_group_name: campaign.campaign_group?.name,
+      campaign_group_id: campaign_group?.id,
+      campaign_group_name: campaign_group?.name,
     })),
   }));
 

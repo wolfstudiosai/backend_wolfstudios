@@ -8,6 +8,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -107,9 +118,9 @@ const getCampaignGroups = (query) => __awaiter(void 0, void 0, void 0, function*
             },
         },
     });
-    const formattedResult = result.map((group) => (Object.assign(Object.assign({}, group), { campaigns: group.campaigns.map((campaign) => {
-            var _a, _b;
-            return (Object.assign(Object.assign({}, campaign), { campaign_group_id: (_a = campaign.campaign_group) === null || _a === void 0 ? void 0 : _a.id, campaign_group_name: (_b = campaign.campaign_group) === null || _b === void 0 ? void 0 : _b.name }));
+    const formattedResult = result.map((group) => (Object.assign(Object.assign({}, group), { campaigns: group.campaigns.map((_a) => {
+            var { campaign_group } = _a, campaign = __rest(_a, ["campaign_group"]);
+            return (Object.assign(Object.assign({}, campaign), { campaign_group_id: campaign_group === null || campaign_group === void 0 ? void 0 : campaign_group.id, campaign_group_name: campaign_group === null || campaign_group === void 0 ? void 0 : campaign_group.name }));
         }) })));
     const total = yield prisma_1.default.campaignGroup.count({ where: whereConditons });
     return {
