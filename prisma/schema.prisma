@@ -32,6 +32,7 @@ model User {
   Portfolio           Portfolio[]
   ThreadParticipant   ThreadParticipant[]
   Message             Message[]
+  partner             Partner[]
 
   @@map("users")
 }
@@ -180,6 +181,50 @@ model CampaignOld {
   created_by User @relation(fields: [user_id], references: [id])
 
   @@map("campaign_HQ")
+}
+
+model Partner {
+  id                    String           @id @default(uuid())
+  name                  String
+  email                 String?
+  phone                 String?
+  profile_image         String?
+  website               String?
+  state                 String?
+  tags                  String[]         @default([])
+  instagram             String?
+  instagram_following   Int              @default(0)
+  tiktok                String?
+  tiktok_following      Int              @default(0)
+  youtube               String?
+  youtube_following     Int              @default(0)
+  x                     String?
+  x_following           Int              @default(0)
+  facebook              String?
+  facebook_following    Int              @default(0)
+  pinterest             String?
+  pinterest_following   Int              @default(0)
+  partner_IG_rate       Int?
+  partner_TT_rate       Int?
+  partner_YT_rate       Int?
+  partner_UGC_rate      Int?
+  partner_360_rate      Int?
+  contract              String?
+  products              String?
+  contributed_campaigns String?
+  profile_category      ProfileCategory?
+  current_status        CurrentStatus?
+  profile_status        String?
+  stakeholder           String?
+  total_audience        Int?
+  sourced_from          String?
+  user_id               String
+  created_at            DateTime         @default(now())
+  updated_at            DateTime         @updatedAt
+
+  created_by User @relation(fields: [user_id], references: [id])
+
+  @@map("partners")
 }
 
 model File {
@@ -354,4 +399,19 @@ enum PortfolioStatus {
   APPROVED
   REJECTED
   COMPLETED
+}
+
+enum ProfileCategory {
+  MODEL
+  CREATOR
+  PHOTOGRAPHER
+  REVIEW_PARTNER
+  B2B
+  BLOG_OR_REVIEWER
+}
+
+enum CurrentStatus {
+  ACTIVE
+  INACTIVE
+  NOT_STARTED
 }

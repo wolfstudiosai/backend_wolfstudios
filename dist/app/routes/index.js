@@ -3,9 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const Auth_routes_1 = require("../module/Auth/Auth.routes");
 const Campaign_routes_1 = require("../module/Campaign/Campaign.routes");
-const campaign_group_routes_1 = require("../module/Campaign_Group/campaign_group.routes");
+const campaign_group_routes_1 = require("../module/CampaignGroup/campaign_group.routes");
 const Content_routes_1 = require("../module/ContentHQ/Content.routes");
 const File_routes_1 = require("../module/File/File.routes");
+const Partner_routes_1 = require("../module/Partner/Partner.routes");
 const Portfolios_routes_1 = require("../module/Portfolios/Portfolios.routes");
 const Thread_routes_1 = require("../module/Threads/Thread.routes");
 const User_routes_1 = require("../module/User/User.routes");
@@ -35,10 +36,10 @@ const routes = [
         path: "/campaign-group",
         route: campaign_group_routes_1.CampaignGroupRoutes,
     },
-    // {
-    //   path: "/old_campaign",
-    //   route: OldCampaignRoutes,
-    // },
+    {
+        path: "/partner",
+        route: Partner_routes_1.PartnerRoutes,
+    },
     {
         path: "/file",
         route: File_routes_1.FileRoutes,
