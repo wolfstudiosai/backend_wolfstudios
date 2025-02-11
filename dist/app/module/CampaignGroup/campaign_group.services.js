@@ -69,7 +69,42 @@ const getCampaignGroups = (query) => __awaiter(void 0, void 0, void 0, function*
             [sortWith]: sortSequence,
         },
         include: {
-            campaigns: true
+            campaigns: {
+                select: {
+                    id: true,
+                    name: true,
+                    slug: true,
+                    guideline: true,
+                    campaign_image: true,
+                    content_engagement: true,
+                    content_hq: true,
+                    note: true,
+                    stakeholder: true,
+                    campaign_status: true,
+                    retail_partners: true,
+                    proposed_partners: true,
+                    live_partners: true,
+                    contributed_partners: true,
+                    image_gallery: true,
+                    video_gallery: true,
+                    budget: true,
+                    total_expense: true,
+                    campaign_ROI: true,
+                    start_date: true,
+                    end_date: true,
+                    description: true,
+                    spaces: true,
+                    product_expense: true,
+                    created_at: true,
+                    updated_at: true,
+                    campaign_group: {
+                        select: {
+                            id: true,
+                            name: true
+                        }
+                    }
+                }
+            }
         }
     });
     const total = yield prisma_1.default.campaignGroup.count({ where: whereConditons });
