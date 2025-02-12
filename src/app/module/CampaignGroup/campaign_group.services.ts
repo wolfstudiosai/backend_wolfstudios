@@ -194,23 +194,39 @@ const updateCampaignGroup = async (
 };
 
 const deleteCampaignGroups = async ({ ids }: { ids: string[] }) => {
-    const campaigns = await prisma.campaignGroup.findMany({
-        where: {
-            id: {
-                in: ids,
+    const result = await prisma.$transaction(async (tx) => {
+        const campaigns = await tx.campaignGroup.findMany({
+            where: {
+                id: {
+                    in: ids,
+                },
             },
-        },
-    });
-    if (!campaigns?.length) {
-        throw new ApiError(httpStatus.NOT_FOUND, "Campaign group not found");
-    }
-    const result = await prisma.campaignGroup.deleteMany({
-        where: {
-            id: {
-                in: ids,
+        });
+        if (!campaigns?.length) {
+            throw new ApiError(httpStatus.NOT_FOUND, "Campaign group not found");
+        }
+
+        const campaignIds = campaigns.map((campaign) => campaign.id);
+
+        await tx.campaign.deleteMany({
+            where: {
+                campaign_group_id: {
+                    in: campaignIds,
+                }
+            }
+        })
+
+        const result = await tx.campaignGroup.deleteMany({
+            where: {
+                id: {
+                    in: campaignIds,
+                },
             },
-        },
-    });
+        });
+
+        return result
+    })
+
     return {
         deleted_count: result.count,
         message: `${result.count} campaign group deleted successfully`,

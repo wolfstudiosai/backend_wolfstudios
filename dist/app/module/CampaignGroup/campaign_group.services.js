@@ -185,23 +185,34 @@ const updateCampaignGroup = (id, payload) => __awaiter(void 0, void 0, void 0, f
     return result;
 });
 const deleteCampaignGroups = (_a) => __awaiter(void 0, [_a], void 0, function* ({ ids }) {
-    const campaigns = yield prisma_1.default.campaignGroup.findMany({
-        where: {
-            id: {
-                in: ids,
+    const result = yield prisma_1.default.$transaction((tx) => __awaiter(void 0, void 0, void 0, function* () {
+        const campaigns = yield tx.campaignGroup.findMany({
+            where: {
+                id: {
+                    in: ids,
+                },
             },
-        },
-    });
-    if (!(campaigns === null || campaigns === void 0 ? void 0 : campaigns.length)) {
-        throw new ApiError_1.default(http_status_1.default.NOT_FOUND, "Campaign group not found");
-    }
-    const result = yield prisma_1.default.campaignGroup.deleteMany({
-        where: {
-            id: {
-                in: ids,
+        });
+        if (!(campaigns === null || campaigns === void 0 ? void 0 : campaigns.length)) {
+            throw new ApiError_1.default(http_status_1.default.NOT_FOUND, "Campaign group not found");
+        }
+        const campaignIds = campaigns.map((campaign) => campaign.id);
+        yield tx.campaign.deleteMany({
+            where: {
+                campaign_group_id: {
+                    in: campaignIds,
+                }
+            }
+        });
+        const result = yield tx.campaignGroup.deleteMany({
+            where: {
+                id: {
+                    in: campaignIds,
+                },
             },
-        },
-    });
+        });
+        return result;
+    }));
     return {
         deleted_count: result.count,
         message: `${result.count} campaign group deleted successfully`,
