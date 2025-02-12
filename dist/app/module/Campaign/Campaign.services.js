@@ -95,6 +95,9 @@ const getCampaigns = (query) => __awaiter(void 0, void 0, void 0, function* () {
         orderBy: {
             [sortWith]: sortSequence,
         },
+        include: {
+            campaign_group: true
+        }
     });
     const total = yield prisma_1.default.campaign.count({ where: whereConditons });
     return {

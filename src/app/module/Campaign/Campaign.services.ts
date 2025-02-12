@@ -89,6 +89,9 @@ const getCampaigns = async (query: Record<string, any>) => {
         orderBy: {
             [sortWith]: sortSequence,
         },
+        include: {
+            campaign_group: true
+        }
     });
 
     const total = await prisma.campaign.count({ where: whereConditons });
