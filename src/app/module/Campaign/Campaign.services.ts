@@ -30,7 +30,6 @@ const createCampaign = async (data: ICampaign) => {
         }
     })
 
-
     return result;
 }
 

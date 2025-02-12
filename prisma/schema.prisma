@@ -117,23 +117,23 @@ model CampaignGroup {
 }
 
 model Campaign {
-  id                   String         @id @default(uuid())
+  id                   String           @id @default(uuid())
   name                 String
   slug                 String
   campaign_group_id    String
   guideline            String?
   campaign_image       String?
-  content_engagement   Int            @default(0)
+  content_engagement   Int              @default(0)
   content_hq           String?
   note                 String?
   stakeholder          String?
-  campaign_status      CampaignStatus @default(UPCOMING)
+  campaign_status      CampaignStatus   @default(UPCOMING)
   retail_partners      String?
   proposed_partners    String?
   live_partners        String?
   contributed_partners String?
-  image_gallery        String[]       @default([])
-  video_gallery        String[]       @default([])
+  image_gallery        String[]         @default([])
+  video_gallery        String[]         @default([])
   budget               Int?
   total_expense        Int?
   campaign_ROI         String?
@@ -142,8 +142,9 @@ model Campaign {
   description          String?
   spaces               String?
   product_expense      Int?
-  created_at           DateTime       @default(now())
-  updated_at           DateTime       @updatedAt
+  campaign_progress    CampaignProgress @default(NOT_APPROVED)
+  created_at           DateTime         @default(now())
+  updated_at           DateTime         @updatedAt
 
   campaign_group CampaignGroup @relation(fields: [campaign_group_id], references: [id])
 
@@ -414,4 +415,19 @@ enum CurrentStatus {
   ACTIVE
   INACTIVE
   NOT_STARTED
+}
+
+enum CampaignProgress {
+  GATHER_RATES
+  REVIEW_RATES
+  APPROVED_FOR_CAMPAIGN
+  IN_NEGOTIATION
+  AWAITING_SHIPMENT
+  AWAITING_DELIVERABLES
+  CONTENT_REVIEW
+  AWAITING_PARTNER_POST
+  APPROVED_FOR_PAYMENT
+  COMPLETE
+  NOT_APPROVED
+  ALL_PARTNERS
 }

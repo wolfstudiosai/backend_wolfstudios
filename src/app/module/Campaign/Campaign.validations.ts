@@ -1,4 +1,4 @@
-import { CampaignStatus } from "@prisma/client";
+import { CampaignProgress, CampaignStatus } from "@prisma/client";
 import { z } from "zod";
 
 const createCampaignValidationSchema = z.object({
@@ -31,6 +31,7 @@ const createCampaignValidationSchema = z.object({
     description: z.string().nullable().optional(),
     spaces: z.string().nullable().optional(),
     product_expense: z.number().nullable().optional(),
+    campaign_progress: z.nativeEnum(CampaignProgress).nullable().optional(),
   })
     .strict(),
 });
@@ -59,6 +60,7 @@ const updateCampaignValidationSchema = z.object({
     description: z.string().nullable().optional(),
     spaces: z.string().nullable().optional(),
     product_expense: z.number().nullable().optional(),
+    campaign_progress: z.nativeEnum(CampaignProgress).nullable().optional(),
   })
     .strict(),
 });

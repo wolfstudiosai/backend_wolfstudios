@@ -30,6 +30,7 @@ const createCampaignValidationSchema = zod_1.z.object({
         description: zod_1.z.string().nullable().optional(),
         spaces: zod_1.z.string().nullable().optional(),
         product_expense: zod_1.z.number().nullable().optional(),
+        campaign_progress: zod_1.z.nativeEnum(client_1.CampaignProgress).nullable().optional(),
     })
         .strict(),
 });
@@ -57,6 +58,7 @@ const updateCampaignValidationSchema = zod_1.z.object({
         description: zod_1.z.string().nullable().optional(),
         spaces: zod_1.z.string().nullable().optional(),
         product_expense: zod_1.z.number().nullable().optional(),
+        campaign_progress: zod_1.z.nativeEnum(client_1.CampaignProgress).nullable().optional(),
     })
         .strict(),
 });
