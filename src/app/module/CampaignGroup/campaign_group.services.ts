@@ -6,16 +6,19 @@ import prisma from "../../shared/prisma";
 import fieldValidityChecker from "../../utils/fieldValidityChecker";
 import pagination from "../../utils/pagination";
 import { slugGenerator } from "../../utils/slugGenerator";
-import { campaignGroupSearchableFields, campaignGroupSortableFields } from "./campaign_group.constants";
+import {
+    campaignGroupSearchableFields,
+    campaignGroupSortableFields,
+} from "./campaign_group.constants";
 import { ICampaignGroup } from "./campaign_group.interfaces";
 
 const createCampaignGroup = async (data: ICampaignGroup) => {
     const result = await prisma.campaignGroup.create({
         data: {
             ...data,
-            slug: slugGenerator(data.name)
-        }
-    })
+            slug: slugGenerator(data.name),
+        },
+    });
 
 
     return result;
@@ -110,6 +113,15 @@ const getCampaignGroups = async (query: Record<string, any>) => {
         }
     });
 
+    const formattedResult = result.map((group) => ({
+        ...group,
+        campaigns: group.campaigns.map(({ campaign_group, ...campaign }) => ({
+            ...campaign,
+            campaign_group_id: campaign_group?.id,
+            campaign_group_name: campaign_group?.name,
+        })),
+    }));
+
     const total = await prisma.campaignGroup.count({ where: whereConditons });
 
     return {
@@ -118,21 +130,24 @@ const getCampaignGroups = async (query: Record<string, any>) => {
             limit: limitNumber,
             total,
         },
-        data: result,
+        data: formattedResult,
     };
 };
 
-const updateCampaignGroup = async (id: string, payload: Record<string, any>) => {
+const updateCampaignGroup = async (
+    id: string,
+    payload: Record<string, any>
+) => {
     if (payload?.name) {
-        payload.slug = slugGenerator(payload.name)
+        payload.slug = slugGenerator(payload.name);
     }
 
     const result = await prisma.campaignGroup.update({
         where: {
-            id
+            id,
         },
         data: {
-            ...payload
+            ...payload,
         },
         include: {
             campaigns: {
@@ -175,36 +190,36 @@ const updateCampaignGroup = async (id: string, payload: Record<string, any>) => 
         }
     });
 
-    return result
-}
+    return result;
+};
 
 const deleteCampaignGroups = async ({ ids }: { ids: string[] }) => {
     const campaigns = await prisma.campaignGroup.findMany({
         where: {
             id: {
-                in: ids
-            }
-        }
-    })
+                in: ids,
+            },
+        },
+    });
     if (!campaigns?.length) {
-        throw new ApiError(httpStatus.NOT_FOUND, "Campaign group not found")
+        throw new ApiError(httpStatus.NOT_FOUND, "Campaign group not found");
     }
     const result = await prisma.campaignGroup.deleteMany({
         where: {
             id: {
-                in: ids
-            }
-        }
+                in: ids,
+            },
+        },
     });
     return {
         deleted_count: result.count,
-        message: `${result.count} campaign group deleted successfully`
-    }
-}
+        message: `${result.count} campaign group deleted successfully`,
+    };
+};
 
 export const CampaignGroupServices = {
     createCampaignGroup,
     getCampaignGroups,
     updateCampaignGroup,
-    deleteCampaignGroups
-}
+    deleteCampaignGroups,
+};

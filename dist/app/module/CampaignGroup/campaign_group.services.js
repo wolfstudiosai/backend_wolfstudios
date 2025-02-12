@@ -8,6 +8,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -23,7 +34,7 @@ const slugGenerator_1 = require("../../utils/slugGenerator");
 const campaign_group_constants_1 = require("./campaign_group.constants");
 const createCampaignGroup = (data) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield prisma_1.default.campaignGroup.create({
-        data: Object.assign(Object.assign({}, data), { slug: (0, slugGenerator_1.slugGenerator)(data.name) })
+        data: Object.assign(Object.assign({}, data), { slug: (0, slugGenerator_1.slugGenerator)(data.name) }),
     });
     return result;
 });
@@ -108,6 +119,10 @@ const getCampaignGroups = (query) => __awaiter(void 0, void 0, void 0, function*
             }
         }
     });
+    const formattedResult = result.map((group) => (Object.assign(Object.assign({}, group), { campaigns: group.campaigns.map((_a) => {
+            var { campaign_group } = _a, campaign = __rest(_a, ["campaign_group"]);
+            return (Object.assign(Object.assign({}, campaign), { campaign_group_id: campaign_group === null || campaign_group === void 0 ? void 0 : campaign_group.id, campaign_group_name: campaign_group === null || campaign_group === void 0 ? void 0 : campaign_group.name }));
+        }) })));
     const total = yield prisma_1.default.campaignGroup.count({ where: whereConditons });
     return {
         meta: {
@@ -115,7 +130,7 @@ const getCampaignGroups = (query) => __awaiter(void 0, void 0, void 0, function*
             limit: limitNumber,
             total,
         },
-        data: result,
+        data: formattedResult,
     };
 });
 const updateCampaignGroup = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
@@ -124,7 +139,7 @@ const updateCampaignGroup = (id, payload) => __awaiter(void 0, void 0, void 0, f
     }
     const result = yield prisma_1.default.campaignGroup.update({
         where: {
-            id
+            id,
         },
         data: Object.assign({}, payload),
         include: {
@@ -173,9 +188,9 @@ const deleteCampaignGroups = (_a) => __awaiter(void 0, [_a], void 0, function* (
     const campaigns = yield prisma_1.default.campaignGroup.findMany({
         where: {
             id: {
-                in: ids
-            }
-        }
+                in: ids,
+            },
+        },
     });
     if (!(campaigns === null || campaigns === void 0 ? void 0 : campaigns.length)) {
         throw new ApiError_1.default(http_status_1.default.NOT_FOUND, "Campaign group not found");
@@ -183,18 +198,18 @@ const deleteCampaignGroups = (_a) => __awaiter(void 0, [_a], void 0, function* (
     const result = yield prisma_1.default.campaignGroup.deleteMany({
         where: {
             id: {
-                in: ids
-            }
-        }
+                in: ids,
+            },
+        },
     });
     return {
         deleted_count: result.count,
-        message: `${result.count} campaign group deleted successfully`
+        message: `${result.count} campaign group deleted successfully`,
     };
 });
 exports.CampaignGroupServices = {
     createCampaignGroup,
     getCampaignGroups,
     updateCampaignGroup,
-    deleteCampaignGroups
+    deleteCampaignGroups,
 };
