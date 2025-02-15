@@ -13,8 +13,8 @@ const routes_1 = __importDefault(require("./app/routes"));
 const swagger_1 = __importDefault(require("./swagger"));
 const app = (0, express_1.default)();
 // middlewares configuration
-app.use(express_1.default.json());
-app.use(express_1.default.urlencoded({ extended: true }));
+app.use(express_1.default.json({ limit: '50mb' }));
+app.use(express_1.default.urlencoded({ limit: '50mb', extended: true }));
 // app.use(
 //   cors({
 //     origin: [

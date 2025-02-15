@@ -134,14 +134,14 @@ model Campaign {
   contributed_partners String?
   image_gallery        String[]         @default([])
   video_gallery        String[]         @default([])
-  budget               Int?
-  total_expense        Int?
+  budget               Float?
+  total_expense        Float?
   campaign_ROI         String?
   start_date           DateTime?
   end_date             DateTime?
   description          String?
   spaces               String?
-  product_expense      Int?
+  product_expense      Float?
   campaign_progress    CampaignProgress @default(NOT_APPROVED)
   created_at           DateTime         @default(now())
   updated_at           DateTime         @updatedAt
