@@ -10,9 +10,24 @@ import { partnerSearchableFields, partnerSortableFields } from "./Partner.consta
 import { IPartner } from "./Partner.interfaces";
 
 const addPartner = async (user: TAuthUser, data: IPartner) => {
+    let campaign_month = null;
+    if (data.campaign_month) {
+        campaign_month = new Date(data.campaign_month)
+    }
+    let month_sourced = null;
+    if (data.campaign_month) {
+        month_sourced = new Date(data.campaign_month)
+    }
+    let second_payment_date = null;
+    if (data.campaign_month) {
+        second_payment_date = new Date(data.campaign_month)
+    }
     const result = await prisma.partner.create({
         data: {
             ...data,
+            campaign_month,
+            month_sourced,
+            second_payment_date,
             user_id: user.id
         }
     })
@@ -92,6 +107,15 @@ const getPartners = async (query: Record<string, any>) => {
 };
 
 const updatePartner = async (id: string, payload: Record<string, any>) => {
+    if (payload.campaign_month) {
+        payload.campaign_month = new Date(payload.campaign_month)
+    }
+    if (payload.campaign_month) {
+        payload.month_sourced = new Date(payload.campaign_month)
+    }
+    if (payload.campaign_month) {
+        payload.second_payment_date = new Date(payload.campaign_month)
+    }
     const result = await prisma.partner.update({
         where: {
             id

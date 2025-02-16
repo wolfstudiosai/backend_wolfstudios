@@ -185,43 +185,124 @@ model CampaignOld {
 }
 
 model Partner {
-  id                    String           @id @default(uuid())
-  name                  String
-  email                 String?
-  phone                 String?
-  profile_image         String?
-  website               String?
-  state                 String?
-  tags                  String[]         @default([])
-  instagram             String?
-  instagram_following   Int              @default(0)
-  tiktok                String?
-  tiktok_following      Int              @default(0)
-  youtube               String?
-  youtube_following     Int              @default(0)
-  x                     String?
-  x_following           Int              @default(0)
-  facebook              String?
-  facebook_following    Int              @default(0)
-  pinterest             String?
-  pinterest_following   Int              @default(0)
-  partner_IG_rate       Int?
-  partner_TT_rate       Int?
-  partner_YT_rate       Int?
-  partner_UGC_rate      Int?
-  partner_360_rate      Int?
-  contract              String?
-  products              String?
-  contributed_campaigns String?
-  profile_category      ProfileCategory?
-  current_status        CurrentStatus?
-  profile_status        String?
-  stakeholder           String?
-  total_audience        Int?
-  sourced_from          String?
-  user_id               String
-  created_at            DateTime         @default(now())
-  updated_at            DateTime         @updatedAt
+  id                                      String                @id @default(uuid())
+  name                                    String
+  email                                   String?
+  phone                                   String?
+  whatsapp                                String?
+  profile_image                           String?
+  city                                    String?
+  state                                   String?
+  country                                 String?
+  mailing_address                         String?
+  website                                 String?
+  instagram                               String?
+  instagram_following                     Int                   @default(0)
+  tiktok                                  String?
+  tiktok_following                        Int                   @default(0)
+  youtube                                 String?
+  youtube_following                       Int                   @default(0)
+  x                                       String?
+  x_following                             Int                   @default(0)
+  facebook                                String?
+  facebook_following                      Int                   @default(0)
+  pinterest                               String?
+  pinterest_following                     Int                   @default(0)
+  snapchat                                String?
+  snapchat_following                      Int                   @default(0)
+  linkedin                                String?
+  linkedin_connection                     Int                   @default(0)
+  hourly_rate                             Float?
+  partner_IG_rate                         Float?
+  partner_TT_rate                         Float?
+  partner_YT_rate                         Float?
+  partner_UGC_rate                        Float?
+  partner_360_rate                        Float?
+  contract                                String?
+  tags                                    String?
+  products                                String?
+  contributed_campaigns                   String?
+  live_campaign                           String?
+  profile_category                        ProfileCategory?
+  current_status                          PartnerCurrentStatus?
+  profile_status                          ProfileStatus?
+  stakeholder                             String?
+  total_audience                          Int?
+  sourced_from                            String?
+  partner_gallery                         String[]              @default([])
+  booking_link                            String?
+  age_bracket                             String?
+  note                                    String?
+  affiliate_platform                      AffiliatePlatform?
+  medium                                  String?
+  soundcloud                              String?
+  spotify                                 String?
+  open_to_gifting                         Boolean               @default(false)
+  services                                String?
+  portfolio                               String?
+  case_studies                            String?
+  testimonials                            String?
+  production_hq                           String?
+  proposals                               String?
+  representation                          String?
+  occupation                              String?
+  payment_link                            String?
+  client                                  String?
+  podcast                                 String?
+  refusal_reason                          String?
+  twitch                                  String?
+  revo_amazon_order_confirmation_number   String?
+  amazon_review_link                      String?
+  amazon_review_cupper                    String?
+  amazon_review_the_pill                  String?
+  amazon_storefront                       String?
+  campaign_month                          DateTime?
+  deliverables                            String?
+  google_drive_files                      String?
+  revo_IG_post                            String?
+  journey_step                            PartnerJourneyStep?
+  amount_paid                             Float?
+  total_contributed_engagement_by_content Int?
+  platform_deliverables                   SocialPlatform?
+  platform                                SocialPlatform[]      @default([])
+  revo_offer                              String?
+  user_id                                 String
+  remaining_credits                       Float?
+  TT_post                                 String?
+  YT_post                                 String?
+  total_ROI                               Float?
+  UGC_payment_status                      PaymentStatus?
+  UGC_retainer_amount                     Float?
+  UGC_tiktok_link                         String?
+  partner_post_view                       Int?
+  estimated_taxes                         Float?
+  shipping_FBA_fee_gifted_partner         Float?
+  paypal_fee                              Float?
+  amazon_referral_fee                     Float?
+  amazon_order_total                      Float?
+  AI_profile                              String?
+  amazon_tax                              Float?
+  amazon_kickback                         Float?
+  month_sourced                           DateTime?
+  second_payment_date                     DateTime?
+  client_status                           ClientStatus?
+  facilities                              String?
+  record_id                               String?
+  record_id_text                          String?
+  receipts                                String[]              @default([])
+  destinations                            String?
+  revo_content_performance                String?
+  proposed_campaigns                      String?
+  media_kit                               String[]              @default([])
+  revo_counter_offer                      String?
+  amazon_review_walking_pad_pro           String?
+  amazon_review_walking_pad_standard      String?
+  amazon_review_oil                       String?
+  amazon_review_soothing_cream            String?
+  amazon_review_beauty_wand               String?
+  open_to_whitelisting                    Boolean               @default(false)
+  created_at                              DateTime              @default(now())
+  updated_at                              DateTime              @updatedAt
 
   created_by User @relation(fields: [user_id], references: [id])
 
@@ -409,12 +490,34 @@ enum ProfileCategory {
   REVIEW_PARTNER
   B2B
   BLOG_OR_REVIEWER
+  SPA
 }
 
-enum CurrentStatus {
+enum PartnerCurrentStatus {
+  GATHER_RATES
+  CONTRACT_FULFILLED
+  INVITE_TO_PROGRAM
+  NEEDS_APPROVAL
+  OUT_OF_COUNTRY
   ACTIVE
   INACTIVE
+  NOT_APPROVED
+  UNRESPONSIVE
+  OUTREACH
+  EMAIL_READY
+  AMAZON_REVIEW_COMPLETE
+  FOLLOW_UP
+  WAITLISTED
+  RATE_TOO_HIGH
   NOT_STARTED
+  REJECTED_OFFER
+  AWAITING_AMAZON_REBATE
+  VOID_CONTRACT
+  IN_CONVERSATION
+  DM_OUTREACHED
+  UP_NEXT
+  DONE
+  DO_NOT_CONTRACT
 }
 
 enum CampaignProgress {
@@ -430,4 +533,89 @@ enum CampaignProgress {
   COMPLETE
   NOT_APPROVED
   ALL_PARTNERS
+}
+
+enum AffiliatePlatform {
+  LEVANTA
+  SHARE_A_SALE
+  SQUAREDANCE
+}
+
+enum ProfileStatus {
+  PROSPECT
+  ACTIVE
+  OFFLINE
+  NEEDS_ATTENTION
+  ACCREDITED
+  INVITE_FOR_VERIFICATION
+  VERIFIED
+  LEVEL_0
+  NEEDS_PROFILE_IMAGE
+  UPDATE_RATES
+  GATHER_RATES
+}
+
+enum PartnerOccupation {
+  SOCIAL_INFLUENCER
+  NUTRITIONIST
+  FITNESS_COACH
+  FITNESS_TRAINER
+  CONTENT_CREATOR
+  DOCTOR
+  MODEL
+  PHYSICAL_THERAPIST
+  ATHLETE
+  COMEDIAN
+  FITNESS_DIGITAL_CREATOR
+  ENTREPRENEUR
+  DIGITAL_CREATOR
+  FASHION_MODEL
+  EVENT_ORGANIZER
+  VIDEO_CREATOR
+  NINTENDO_AMBASSADOR
+  CHEF
+  FITNESS_MODEL
+  MASSAGE_THERAPIST
+  FITNESS_CONSULTANT
+  ARTIST
+}
+
+enum PartnerJourneyStep {
+  PROSPECTED
+  GATHER_RATES
+  RATES_GATHERED
+  AMAZON_REBATE
+  AWAITING_AMAZON_REVIEW
+  AMAZON_REVIEW_COMPLETE
+  AWAITING_UGC
+  JOURNEY_COMPLETE
+  SOCIAL_POST
+  IN_DISPUTE
+  AMAZON_REVIEW_FLAGGED
+}
+
+enum SocialPlatform {
+  INSTAGRAM
+  YOUTUBE
+  TIKTOK
+  FACEBOOK
+  PINTEREST
+  WEBSITE
+  TWITCH
+  TWITTER
+  WEB_BLOGGER
+  SNAPCHAT
+}
+
+enum PaymentStatus {
+  DUE
+  PAID
+  HALF_PAID
+}
+
+enum ClientStatus {
+  APPROVED
+  NOT_APPROVED
+  NEEDS_REVIEW
+  GIFTING_ONLY
 }

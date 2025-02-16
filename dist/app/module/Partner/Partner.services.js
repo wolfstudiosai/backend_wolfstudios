@@ -21,8 +21,22 @@ const fieldValidityChecker_1 = __importDefault(require("../../utils/fieldValidit
 const pagination_1 = __importDefault(require("../../utils/pagination"));
 const Partner_constants_1 = require("./Partner.constants");
 const addPartner = (user, data) => __awaiter(void 0, void 0, void 0, function* () {
+    let campaign_month = null;
+    if (data.campaign_month) {
+        campaign_month = new Date(data.campaign_month);
+    }
+    let month_sourced = null;
+    if (data.campaign_month) {
+        month_sourced = new Date(data.campaign_month);
+    }
+    let second_payment_date = null;
+    if (data.campaign_month) {
+        second_payment_date = new Date(data.campaign_month);
+    }
     const result = yield prisma_1.default.partner.create({
-        data: Object.assign(Object.assign({}, data), { user_id: user.id })
+        data: Object.assign(Object.assign({}, data), { campaign_month,
+            month_sourced,
+            second_payment_date, user_id: user.id })
     });
     return result;
 });
@@ -87,6 +101,15 @@ const getPartners = (query) => __awaiter(void 0, void 0, void 0, function* () {
     };
 });
 const updatePartner = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
+    if (payload.campaign_month) {
+        payload.campaign_month = new Date(payload.campaign_month);
+    }
+    if (payload.campaign_month) {
+        payload.month_sourced = new Date(payload.campaign_month);
+    }
+    if (payload.campaign_month) {
+        payload.second_payment_date = new Date(payload.campaign_month);
+    }
     const result = yield prisma_1.default.partner.update({
         where: {
             id
