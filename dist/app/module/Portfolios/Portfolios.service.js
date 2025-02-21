@@ -43,7 +43,10 @@ const createPortfolio = (user, data) => __awaiter(void 0, void 0, void 0, functi
     return result;
 });
 const getPortfolios = (query) => __awaiter(void 0, void 0, void 0, function* () {
-    const { searchTerm, page, limit, sortBy, sortOrder, id, slug } = query, remainingQuery = __rest(query, ["searchTerm", "page", "limit", "sortBy", "sortOrder", "id", "slug"]);
+    let { searchTerm, page, limit, sortBy, sortOrder, id, slug } = query, remainingQuery = __rest(query, ["searchTerm", "page", "limit", "sortBy", "sortOrder", "id", "slug"]);
+    if ((!sortBy && page === String(1)) || (!sortBy && !page)) {
+        sortBy = Portfolios_constant_1.portfolioSortableFields[Math.floor(Math.random() * Portfolios_constant_1.portfolioSortableFields.length)];
+    }
     if (sortBy) {
         (0, fieldValidityChecker_1.default)(Portfolios_constant_1.portfolioSortableFields, sortBy);
     }

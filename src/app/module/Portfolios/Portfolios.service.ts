@@ -29,7 +29,7 @@ const createPortfolio = async (user: TAuthUser, data: ICreatePortfolio) => {
 };
 
 const getPortfolios = async (query: Record<string, any>) => {
-  const {
+  let {
     searchTerm,
     page,
     limit,
@@ -39,6 +39,11 @@ const getPortfolios = async (query: Record<string, any>) => {
     slug,
     ...remainingQuery
   } = query;
+
+  if ((!sortBy && page === String(1)) || (!sortBy && !page)) {
+    sortBy = portfolioSortableFields[Math.floor(Math.random() * portfolioSortableFields.length)]
+  }
+
   if (sortBy) {
     fieldValidityChecker(portfolioSortableFields, sortBy);
   }
